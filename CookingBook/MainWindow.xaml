@@ -1,0 +1,22 @@
+﻿<Window x:Class="CookingBook.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+
+        <Menu Name="MenuAction" Height="22" VerticalAlignment="Top" HorizontalAlignment="Stretch" RenderTransformOrigin="-0.006,-0.868">
+            <MenuItem Header="{Binding Menu}" >
+                <MenuItem Header="{Binding ChangeLanguage}">
+                    <MenuItem Header="ENG" Click="ChangeToENG"/>
+                    <MenuItem Header="PL" Click="ChangeToPL"/>
+                </MenuItem>
+            </MenuItem>
+
+            <MenuItem  Header="{Binding Action}">
+                <MenuItem Header="{Binding Recipe}" Click="ShowAddRecepieWindow"/>
+                <MenuItem Header="{Binding Component}" Click="ShowAddResourceWindow"/>
+                
+            </MenuItem>
+        </Menu>
+    </Grid>
+</Window>
