@@ -13,8 +13,11 @@
                 <Border DockPanel.Dock="Top">
                     <TextBox Name="RecipeFilterText"  TextChanged="RecipeFilterText_Changed" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="10" TextWrapping="Wrap" Text=""/>
                 </Border>
-
-                <Border  DockPanel.Dock="Left">
+                
+                <Border DockPanel.Dock="Top">
+                <Button Name="Button" Content="{Binding RefreshAll}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="GetAllRecipes"/>
+                </Border>
+            <Border  DockPanel.Dock="Left">
                     <ScrollViewer   CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <ListView Name="RecipeListViev" MouseUp="getSelectedRecipe" >
                             <ListView.View>
@@ -42,7 +45,7 @@
                 </Border>
                 <Border DockPanel.Dock="Top" MaxHeight="450">
                     <ScrollViewer Name="AllComponentsSV" CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                        <ListView Name="AllComponentsViev">
+                    <ListView Name="AllComponentsViev" MouseUp="getSelectedComponent">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="True">
                                     <GridView.Columns>
@@ -57,10 +60,10 @@
                     </ScrollViewer>
                 </Border>
                 <Border DockPanel.Dock="Bottom">
-                    <Button Content="{Binding AddComponent}" Margin="10,5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" MinWidth="50" MaxHeight="50" Click="AddComponentToReciepeList"/>
+                <Button Content="{Binding AddComponent}" Margin="10,5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" MinWidth="50" MaxHeight="50" Click="AddComponentToList"/>
                 </Border>
             <Border DockPanel.Dock="Bottom">
-                <Button Content="{Binding DeleteComponent}" Margin="10,5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" MinWidth="50" MaxHeight="50" Click="DeleteComponentFromReciepeList"/>
+                <Button Content="{Binding DeleteComponent}" Margin="10,5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" MinWidth="50" MaxHeight="50" Click="DeleteComponentFromList"/>
             </Border>
 
         </DockPanel>
@@ -69,7 +72,7 @@
             <DockPanel Name="ButtonsPanelDock" DockPanel.Dock="Bottom" MaxHeight="120">
                 <Border Background="Green" DockPanel.Dock="Left">
                     <ScrollViewer Name="ComponentsInSV" CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                        <ListView Name="ComponentsInViev">
+                        <ListView Name="ComponentsInView">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="True">
                                     <GridView.Columns>
@@ -87,21 +90,29 @@
                 <DockPanel DockPanel.Dock="Left">
                     <DockPanel DockPanel.Dock="Left">
                         <Border Background="White" DockPanel.Dock="Top">
-                            <Button Content="{Binding Add}" Margin="10,10" HorizontalAlignment="Stretch" MinWidth="50"/>
+                            <TextBlock Text="Minimalna ilość Zgodnych skł"  Margin="0" TextWrapping="Wrap"/>
                         </Border>
                         <Border Background="White" DockPanel.Dock="Top">
-                            <Button Content="{Binding Update}" Margin="10,10" HorizontalAlignment="Stretch" MinWidth="50"/>
+                            <TextBox Name="MinimumOfComponentsText" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="0" TextWrapping="Wrap" Text=""/>
                         </Border>
                         <Border Background="White" DockPanel.Dock="Top">
-                            <Button Content="{Binding Delete}" Margin="10,10" HorizontalAlignment="Stretch" MinWidth="50"/>
+                            <TextBlock Text="Minimalna ilość Zgodnych osób"  Margin="0,10,0,0" TextWrapping="Wrap"/>
                         </Border>
-                    </DockPanel>
+                    <Border Background="White" DockPanel.Dock="Top">
+                        <TextBox Name="MinimumOfPPLText" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="0" TextWrapping="Wrap" Text=""/>
+                    </Border>
+                    <Border Background="White" DockPanel.Dock="Top">
+                        <TextBlock Text="Maxymalny czas przygotowywania "  Margin="0,10,0,0" TextWrapping="Wrap"/>
+                    </Border>
+                        
+                    <Border Background="White" DockPanel.Dock="Top">
+                        <TextBox Name="MaxTime" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="0" TextWrapping="Wrap" Text=""/>
+                    </Border>
+                </DockPanel>
                     <DockPanel DockPanel.Dock="Left">
-                        <Border Background="White" DockPanel.Dock="Top">
-                            <TextBlock Text="{Binding Name}"  Margin="10" TextWrapping="Wrap"/>
-                        </Border>
-                        <Border Background="White" DockPanel.Dock="Top">
-                            <TextBlock Grid.Column="1"  Margin="10" TextWrapping="Wrap" Text="Ilosć osób"/>
+                        
+                        <Border Background="White" DockPanel.Dock="Left">
+                            
                         </Border>
                         <Border Background="White" DockPanel.Dock="Top">
                             <TextBlock Text="{Binding Chosen}" Margin="10" TextWrapping="Wrap"/>
@@ -110,14 +121,14 @@
 
                     <DockPanel DockPanel.Dock="Left">
                         <Border Background="White" DockPanel.Dock="Top">
-                            <TextBox Name="RecipeNameTextBox"  Margin="10" TextWrapping="Wrap" Text=""/>
+                           
                         </Border>
                         <Border Background="White" DockPanel.Dock="Top">
-                            <TextBox Name="NumberOfPeopleTextBox"  Margin="10" TextWrapping="Wrap" Text=""/>
+                            
                         </Border>
                         <Border Background="White" DockPanel.Dock="Top">
-                            <TextBlock Name="ChosenNameTextBlock" Text="{Binding Name}" Grid.Column="1"  Margin="10" TextWrapping="Wrap"/>
-                        </Border>
+                        <Button Content="{Binding Search}"  Click="FilteringReciepe" Margin="10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" MaxWidth="50" MaxHeight="50"/>
+                    </Border>
                     </DockPanel>
                 </DockPanel>
 

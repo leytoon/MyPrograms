@@ -47,57 +47,56 @@ namespace CookingBook.Windows
             CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(AllComponentsViev.ItemsSource);
             ComponentViev.Filter = (item => (String.IsNullOrEmpty(ComponentsFilterText.Text) ? true : ((item as Component).Name.IndexOf(ComponentsFilterText.Text, StringComparison.OrdinalIgnoreCase) >= 0)));
         }
+        private void getSelectedComponent(object sender, MouseButtonEventArgs e) 
+        {
+            RecipeListViev.SelectedItem = null;
+            ComponentsInView.ItemsSource = DataCollection.ChoosenComponents;
 
+        }
         private void getSelectedRecipe(object sender, MouseButtonEventArgs e)//Get selected Reciepe from list
         {
             var item = sender as ListView;
 
             SelectedRecipe = (Recipe)item.SelectedItems[0];
             
-            
             ChosenRecipeRichTextBox.Selection.Text = SelectedRecipe.RecipeTxt;
-            ChosenNameTextBlock.Text = SelectedRecipe.Name;
             
-            ComponentsInViev.ItemsSource = null;
-            ComponentsInViev.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
+
+            AllComponentsViev.SelectedItem = null;
+            ComponentsInView.ItemsSource = null;
+            ComponentsInView.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
                                                                                //included in Reciepe 3
         }
 
-        private void AddComponentToReciepeList(object sender, RoutedEventArgs e)
+        private void AddComponentToList(object sender, RoutedEventArgs e)
         {
-            if (SelectedRecipe != null)
-            {
-                var SR = (Recipe)RecipeListViev.SelectedItems[0];//SelectedRecipe
-                var SC = (Component)AllComponentsViev.SelectedItem;//SelectedComponent
+            var SC = (Component)AllComponentsViev.SelectedItem;//SelectedComponent
                
-                ComponentsInViev.ItemsSource = null;
-
-                ComponentsInViev.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
-                                                                                   //included in Reciepe 4
-            }
-            else
-            {
-                MessageBox.Show("Wybierz Przepis");
-            }
+            ComponentsInView.ItemsSource = null;
+           
+            ComponentsInView.ItemsSource = DataCollection.AddComponentToList(SC); //Filling List of Components 
+             
         }
 
-        private void DeleteComponentFromReciepeList(object sender, RoutedEventArgs e) 
+        private void DeleteComponentFromList(object sender, RoutedEventArgs e) 
         {
-
-            if (ComponentsInViev.Items.Count != 0)
+            if (ComponentsInView.Items.Count != 0)
             {
-                var SR = (Recipe)RecipeListViev.SelectedItems[0];//SelectedRecipe
-                var SC = (Component)ComponentsInViev.SelectedItem;//SelectedComponent
-
-                ComponentsInViev.ItemsSource = null;
-
-                ComponentsInViev.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
-                                                                                   //included in Reciepe 5
+                var SC = (Component)ComponentsInView.SelectedItem;//SelectedComponent
+                ComponentsInView.ItemsSource = null;
+                ComponentsInView.ItemsSource = DataCollection.DeleteComponentFromChosenList(SC); //Filling List of Components 
+                                                                                   //included in Reciepe
             }
             else
             {
                 MessageBox.Show("Wybierz Skladnik");
             }
+        }
+        private void GetAllRecipes(object sender, RoutedEventArgs e)
+        {
+            RecipeListViev.ItemsSource = null;
+            RecipeListViev.ItemsSource = DataCollection.ListOfRecipes;
+            RecipeFilterText.Text = "";
         }
         private void ComponentsFilterText_Changed(object sender, TextChangedEventArgs e)
         { 
@@ -108,6 +107,9 @@ namespace CookingBook.Windows
         { 
             CollectionViewSource.GetDefaultView(RecipeListViev.ItemsSource).Refresh(); 
         }
-     
+        private void FilteringReciepe(object sender, RoutedEventArgs e) 
+        {
+            DataCollection.FilterRecipeList(1, 1, 1);
+        }
     }
 }

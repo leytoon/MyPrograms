@@ -23,7 +23,16 @@ namespace CookingBook.Utilities
         public string Amount { get; set; }
         public string Search { get; set; }
         public string Persons { get; set; }
-        
+        public string Refresh { get; set; }
+        public string All { get; set; }
+
+        public string RefreshAll
+        {
+            get
+            {
+                return this.Refresh + " " + this.All;
+            }
+        }
         public string DeleteComponent
         {
             get

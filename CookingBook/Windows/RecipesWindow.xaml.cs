@@ -26,63 +26,6 @@ namespace CookingBook.Windows
         SQLIteClient SQLCli = null;
         
         Recipe SelectedRecipe;
-       /* List<Recipe> FillNamesList()
-        {
-            ListOfReciepes = new List<Recipe>();
-
-            var data = SQLCli.GetData("select * from RecipiesTable");
-
-            for (int i = 0; i < data.Tables[0].Rows.Count; i++)
-            {
-                var Items = data.Tables[0].Rows[i].ItemArray;
-                ListOfReciepes.Add(new Recipe(Convert.ToInt32(Items[0]), Items[1].ToString(), 
-                                    Items[2].ToString(), Convert.ToInt32(Items[3])));
-            }
-            return ListOfReciepes;
-        }
-
-        
-        List<Component> FillComponentsList(Recipe selectedRecipe)//Making list of Components included in Recipe
-        {
-            //String SQLquerry = "SELECT ResourcesTable.Idres, ResourcesTable.Resource, ResourcesTable.Value FROM ResourcesTable NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='" + selectedRecipe.Id + "'AND RelationsTable.ComponentId=ResourcesTable.Idres";
-            String SQLquerry = "SELECT ResourcesTable.Idres, ResourcesTable.Resource, ResourcesTable.Value FROM ResourcesTable" +
-           " NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='" + selectedRecipe.Id +
-           "'AND RelationsTable.ComponentId=ResourcesTable.Idres ";
-           
-            var data = SQLCli.GetData(SQLquerry);
-
-            SQLquerry = "SELECT RelationsTable.Amount FROM RelationsTable WHERE RelationsTable.RecipeId='" + selectedRecipe.Id + "'";// + "'AND RelationsTable.ComponentId=ResourcesTable.Idres ";
-            var amountT = SQLCli.GetData(SQLquerry);
-            List<Component> ListOfAllComponents=new List<Component>();
-            
-
-            for (int i = 0; i < data.Tables[0].Rows.Count; i++)
-            {
-                object[] amount = amountT.Tables[0].Rows[i].ItemArray;
-                object[] items = data.Tables[0].Rows[i].ItemArray;
-                ListOfAllComponents.Add(new Component(Convert.ToInt32(items[0]), items[1].ToString(), items[2].ToString(), amount[0].ToString()));
-            }
-
-            return ListOfAllComponents;
-        }
-
-        List<Component> FillComponentsList()//Przerobić logikę tego czegoś po tym, jak zrobisz metodę wyżej. Pomyśl o zrobieniu jednej metody od
-        {
-            // RecipeList = new List<Recipe>();
-            var data = SQLCli.GetData("select * from ResourcesTable");
-
-            ListOfComponents.Clear();
-
-
-            for (int i = 0; i < data.Tables[0].Rows.Count; i++)
-            {
-                var Items = data.Tables[0].Rows[i].ItemArray;
-                ListOfComponents.Add(new Component(Convert.ToInt32(Items[0]), Items[1].ToString(), Items[2].ToString()));
-            }
-
-            return ListOfComponents;
-
-        }*/
 
         public RecipesWindow()
         {
@@ -135,7 +78,7 @@ namespace CookingBook.Windows
             }
             else
             {
-                MessageBox.Show("Wybierz Przepis");
+                MessageBox.Show("Ilość się liczy");
             }
         }
 
