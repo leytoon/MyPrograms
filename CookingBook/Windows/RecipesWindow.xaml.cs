@@ -13,20 +13,23 @@ using System.Windows.Shapes;
 using DatabaseLib.DBClients;
 using CookingBook.DataTypes;
 using CookingBook.Utilities;
+using System.Globalization;
 
 namespace CookingBook.Windows
 {
 
     public partial class RecipesWindow : Window
     {
-        List<Recipe> ListOfReciepes = new List<Recipe>();
-        List<Component> ListOfComponents = new List<Component>();
+       
+        CookingBookDataCollection DataCollection;
 
         SQLIteClient SQLCli = null;
+        
         Recipe SelectedRecipe;
-        bool FillNamesList()
+       /* List<Recipe> FillNamesList()
         {
-            // RecipeList = new List<Recipe>();
+            ListOfReciepes = new List<Recipe>();
+
             var data = SQLCli.GetData("select * from RecipiesTable");
 
             for (int i = 0; i < data.Tables[0].Rows.Count; i++)
@@ -35,45 +38,51 @@ namespace CookingBook.Windows
                 ListOfReciepes.Add(new Recipe(Convert.ToInt32(Items[0]), Items[1].ToString(), 
                                     Items[2].ToString(), Convert.ToInt32(Items[3])));
             }
-            
-            RecipeListViev.ItemsSource = ListOfReciepes;
-            
-            return true;
+            return ListOfReciepes;
         }
 
+        
         List<Component> FillComponentsList(Recipe selectedRecipe)//Making list of Components included in Recipe
         {
-            String SQLquerry = "SELECT ResourcesTable.Idres, ResourcesTable.Resource, ResourcesTable. Value FROM ResourcesTable NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='" + selectedRecipe.Id + "'AND RelationsTable.ComponentId=ResourcesTable.Idres";
+            //String SQLquerry = "SELECT ResourcesTable.Idres, ResourcesTable.Resource, ResourcesTable.Value FROM ResourcesTable NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='" + selectedRecipe.Id + "'AND RelationsTable.ComponentId=ResourcesTable.Idres";
+            String SQLquerry = "SELECT ResourcesTable.Idres, ResourcesTable.Resource, ResourcesTable.Value FROM ResourcesTable" +
+           " NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='" + selectedRecipe.Id +
+           "'AND RelationsTable.ComponentId=ResourcesTable.Idres ";
+           
             var data = SQLCli.GetData(SQLquerry);
-            ListOfComponents.Clear();
 
+            SQLquerry = "SELECT RelationsTable.Amount FROM RelationsTable WHERE RelationsTable.RecipeId='" + selectedRecipe.Id + "'";// + "'AND RelationsTable.ComponentId=ResourcesTable.Idres ";
+            var amountT = SQLCli.GetData(SQLquerry);
+            List<Component> ListOfAllComponents=new List<Component>();
             
+
             for (int i = 0; i < data.Tables[0].Rows.Count; i++)
             {
-                var Items = data.Tables[0].Rows[i].ItemArray;
-                ListOfComponents.Add(new Component(Convert.ToInt32(Items[0]), Items[1].ToString(), Convert.ToSingle(Items[2])));
+                object[] amount = amountT.Tables[0].Rows[i].ItemArray;
+                object[] items = data.Tables[0].Rows[i].ItemArray;
+                ListOfAllComponents.Add(new Component(Convert.ToInt32(items[0]), items[1].ToString(), items[2].ToString(), amount[0].ToString()));
             }
 
-            return ListOfComponents;
+            return ListOfAllComponents;
         }
 
         List<Component> FillComponentsList()//Przerobić logikę tego czegoś po tym, jak zrobisz metodę wyżej. Pomyśl o zrobieniu jednej metody od
         {
             // RecipeList = new List<Recipe>();
-            var data = SQLCli.GetData("select * from RecipiesTable");
-            
+            var data = SQLCli.GetData("select * from ResourcesTable");
+
+            ListOfComponents.Clear();
+
+
             for (int i = 0; i < data.Tables[0].Rows.Count; i++)
             {
                 var Items = data.Tables[0].Rows[i].ItemArray;
-                ListOfReciepes.Add(new Recipe(Convert.ToInt32(Items[0]), Items[1].ToString(), Items[2].ToString(), Convert.ToInt32(Items[3])));
-
+                ListOfComponents.Add(new Component(Convert.ToInt32(Items[0]), Items[1].ToString(), Items[2].ToString()));
             }
-
-            RecipeListViev.ItemsSource = ListOfReciepes;
 
             return ListOfComponents;
 
-        }
+        }*/
 
         public RecipesWindow()
         {
@@ -81,31 +90,108 @@ namespace CookingBook.Windows
 
             SQLCli = new SQLIteClient("", "", MainWindow.DbPath, "");
 
-            RecipeListViev.DataContext = CookinBookDictionary.Instance.GetNames(MainWindow.SelectedLanguage);
-            MainGrid.DataContext = CookinBookDictionary.Instance.GetNames(MainWindow.SelectedLanguage);
-            ComponentsInViev.DataContext = CookinBookDictionary.Instance.GetNames(MainWindow.SelectedLanguage);
+            DataCollection = new CookingBookDataCollection(SQLCli);
 
-            FillNamesList();
+            MainDockPanel.DataContext = CookinBookDictionary.Instance.GetNames(MainWindow.SelectedLanguage);
+           
+            RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
+            AllComponentsViev.ItemsSource = DataCollection.GetFullComponentList();
+
+            CollectionView RecipeViev = (CollectionView)CollectionViewSource.GetDefaultView(RecipeListViev.ItemsSource);
+            RecipeViev.Filter = (item => (String.IsNullOrEmpty(RecipeFilterText.Text) ? true : ((item as Recipe).Name.IndexOf(RecipeFilterText.Text, StringComparison.OrdinalIgnoreCase) >= 0)));
+            CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(AllComponentsViev.ItemsSource);
+            ComponentViev.Filter = (item => (String.IsNullOrEmpty(ComponentsFilterText.Text) ? true : ((item as Component).Name.IndexOf(ComponentsFilterText.Text, StringComparison.OrdinalIgnoreCase) >= 0)));
+
         }
-        
-        private void getSelectedItem(object sender, MouseButtonEventArgs e)//Get selected Reciepe from list
+       
+        private void getSelectedRecipe(object sender, MouseButtonEventArgs e)//Get selected Reciepe from list
         {
             var item = sender as ListView;
 
             SelectedRecipe = (Recipe)item.SelectedItems[0];
-
-            RecipeRichTextBox.SelectAll();
-            RecipeRichTextBox.Selection.Text = SelectedRecipe.RecipeTxt;
-
+            
+            
+            ChosenRecipeRichTextBox.Selection.Text = SelectedRecipe.RecipeTxt;
+            ChosenNameTextBlock.Text = SelectedRecipe.Name;
             ComponentsInViev.ItemsSource = null;
             
-            ComponentsInViev.ItemsSource = FillComponentsList(SelectedRecipe); //Filling List of Components 
-                                                                               //included in Reciepe
+            ComponentsInViev.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
+                                                                               //included in Reciepe 
+        }
+        private void AddComponentToReciepeList(object sender, RoutedEventArgs e)
+        {
+            if (SelectedRecipe != null && TxtValidator.IsAmountValid(AmountOfComponentTextBox.Text.Replace(".", ",")))
+            {
+                var SR = (Recipe)RecipeListViev.SelectedItems[0];//SelectedRecipe
+                var SC = (Component)AllComponentsViev.SelectedItem;//SelectedComponent
+               
+                string querry = "INSERT INTO RelationsTable (ComponentId,RecipeId,Amount)VALUES('" + SC.Id + "','" + SR.Id + "','" +AmountOfComponentTextBox.Text.Replace(".",",") + "')";
+                SQLCli.SetData(querry);
+
+                ComponentsInViev.ItemsSource = null;
+
+                ComponentsInViev.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
+                                                                                   //included in Reciepe 
+            }
+            else
+            {
+                MessageBox.Show("Wybierz Przepis");
+            }
         }
 
-        private void RecipeListViev_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DeleteComponentFromReciepeList(object sender, RoutedEventArgs e) 
         {
 
+            if (ComponentsInViev.Items.Count != 0)
+            {
+                var SR = (Recipe)RecipeListViev.SelectedItems[0];//SelectedRecipe
+                var SC = (Component)ComponentsInViev.SelectedItem;//SelectedComponent
+
+                string querry = "DELETE FROM RelationsTable WHERE ComponentId='" + SC.Id + "'";
+                SQLCli.SetData(querry);
+
+                ComponentsInViev.ItemsSource = null;
+
+                ComponentsInViev.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
+                                                                                   //included in Reciepe 
+            }
+            else
+            {
+                MessageBox.Show("Wybierz Skladnik");
+            }
+        }
+
+        private void AddNewRecipe (object sender, RoutedEventArgs e) 
+        {
+            ChosenRecipeRichTextBox.SelectAll();
+           
+            string querry = "INSERT INTO RecipiesTable (Name,Recipe,Persons)VALUES('" + RecipeNameTextBox.Text + "','" + ChosenRecipeRichTextBox.Selection.Text + "','" + NumberOfPeopleTextBox.Text + "')";
+            SQLCli.SetData(querry);
+            RecipeListViev.ItemsSource = null;
+            RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
+
+        }
+
+        private void UpdateRecipe(object sender, RoutedEventArgs e) 
+        { 
+
+
+        }
+        private void DeleteRecipe(object sender, RoutedEventArgs e)
+        {
+            SQLCli.DeleteData("DELETE FROM RecipiesTable WHERE Id='" + SelectedRecipe.Id + "'");
+            SQLCli.DeleteData("DELETE FROM RelationsTable WHERE RecipeId='" + SelectedRecipe.Id + "'");
+            RecipeListViev.ItemsSource = null;
+            RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
+        }
+        private void ComponentsFilterText_Changed(object sender, TextChangedEventArgs e)
+        { 
+            CollectionViewSource.GetDefaultView(AllComponentsViev.ItemsSource).Refresh(); 
+        }
+
+        private void RecipeFilterText_Changed(object sender, TextChangedEventArgs e)
+        { 
+            CollectionViewSource.GetDefaultView(RecipeListViev.ItemsSource).Refresh(); 
         }
     }
 }

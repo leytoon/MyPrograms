@@ -14,6 +14,7 @@ namespace DatabaseLib.DBClients
         protected string DbAddress; //For other kind of DataBases
         protected string DbUserName;
         protected string DbPassword;
+        
         public SQLClientBase(string _dbName, string _dbUserName, string _dbPassword, string _dbAddress)
         {
             DbName = _dbName;
@@ -21,8 +22,7 @@ namespace DatabaseLib.DBClients
             DbUserName = _dbUserName;
             DbPassword = _dbPassword;
         }
-
-
+       
         public abstract DataSet GetData(string Querry);
         public abstract int SetData(string Querry);
         public abstract int UpdateData(string Querry);

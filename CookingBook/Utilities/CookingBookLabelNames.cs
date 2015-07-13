@@ -8,6 +8,7 @@ namespace CookingBook.Utilities
 {
     public class CookingBookLabelNames
     {
+        public string Chosen { get; set; }
         public string Action { get; set; }
         public string Menu { get; set; }
         public string Main { get; set; }
@@ -19,21 +20,39 @@ namespace CookingBook.Utilities
         public string Component { get; set; }
         public string Price { get; set; }
         public string Name { get; set; }
-
-        public string AddRecipieWindow 
+        public string Amount { get; set; }
+        public string Search { get; set; }
+        public string Persons { get; set; }
+        
+        public string DeleteComponent
         {
             get
             {
-                return this.Add + this.Recipe + this.Window;
+                return this.Delete + " " + this.Component;
             }
         }
-
-        public string AddComponentWindow 
-        { 
-            get {
-                return this.Add + this.Component + this.Window;
+        public string SearchRecipie
+        {
+            get
+            {
+                return this.Search + " " + this.Recipe;
             }
         }
+        public string SearchComponent
+        {
+            get
+            {
+                return this.Search + " " + this.Component;
+            }
+        }
+        public string AddRecipie 
+        {
+            get
+            {
+                return this.Add + " "+this.Recipe;
+            }
+        }
+        
         public string AddComponent
         {
             get
@@ -49,7 +68,13 @@ namespace CookingBook.Utilities
                 return this.Recipe + " " + this.Name;
             }
         }
-
+        public string ChosenReciepe
+        {
+            get
+            {
+                return this.Chosen + " " + this.Recipe;
+            }
+        }
 
         }
     

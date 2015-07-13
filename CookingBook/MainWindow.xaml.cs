@@ -33,8 +33,6 @@ namespace CookingBook
             CookingBookLanguageSelect.ChangeLanuage(SelectedLanguage, this);
             
         }
-
-
         void ChangeToENG(object sender, RoutedEventArgs e)
         {
             SelectedLanguage = "ENG";
@@ -45,17 +43,23 @@ namespace CookingBook
             SelectedLanguage = "PL";
             CookingBookLanguageSelect.ChangeLanuage(SelectedLanguage, this);
         }
-        void ShowAddResourceWindow(object sender, RoutedEventArgs e)
+        void ShowAddComponentWindow(object sender, RoutedEventArgs e)
         {
             ComponentsWindow Window = new ComponentsWindow();
-            Window.Title = CookinBookDictionary.Instance.GetNames(SelectedLanguage).AddComponentWindow;
+            Window.Title = CookinBookDictionary.Instance.GetNames(SelectedLanguage).AddComponent;
             Window.Show();
            
         }
         void ShowAddRecepieWindow(object sender, RoutedEventArgs e)
         {
             RecipesWindow Window = new RecipesWindow();
-            Window.Title = CookinBookDictionary.Instance.GetNames(SelectedLanguage).AddRecipieWindow;
+            Window.Title = CookinBookDictionary.Instance.GetNames(SelectedLanguage).AddRecipie;
+            Window.Show();
+        }
+        void ShowSearchRecipeWindow(object sender, RoutedEventArgs e)
+        {
+            SearchRecipeWindow Window = new SearchRecipeWindow();
+            Window.Title = CookinBookDictionary.Instance.GetNames(SelectedLanguage).SearchRecipie;
             Window.Show();
         }
        

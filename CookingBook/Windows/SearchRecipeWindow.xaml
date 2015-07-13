@@ -1,8 +1,144 @@
 ﻿<Window x:Class="CookingBook.Windows.SearchRecipeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SearchRecipeWindow" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
-</Window>
+        Title="RecipeSearchWindow" Height="auto" Width="auto">
+
+        <DockPanel Name="MainDockPanel">
+
+            <DockPanel Name="RecipeDockPanel" DockPanel.Dock="Left">
+                <Border DockPanel.Dock="Top">
+                    <TextBlock  Text="{Binding SearchRecipie}" VerticalAlignment="Center" HorizontalAlignment="Center"  TextWrapping="Wrap"/>
+                </Border>
+
+                <Border DockPanel.Dock="Top">
+                    <TextBox Name="RecipeFilterText"  TextChanged="RecipeFilterText_Changed" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="10" TextWrapping="Wrap" Text=""/>
+                </Border>
+
+                <Border  DockPanel.Dock="Left">
+                    <ScrollViewer   CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListView Name="RecipeListViev" MouseUp="getSelectedRecipe" >
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="True">
+                                    <GridView.Columns>
+                                        <GridViewColumn  Width="auto" Header="{Binding Recipe}"
+                                             DisplayMemberBinding="{Binding Name}" />
+                                        <GridViewColumn  Width="auto" Header= "{Binding Value}"
+                                             DisplayMemberBinding="{Binding Persons}"/>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </Border>
+            </DockPanel>
+
+
+            <DockPanel Name="ComponentDockPanel" DockPanel.Dock="Left" VerticalAlignment="Top">
+                <Border DockPanel.Dock="Top">
+                    <TextBlock Text="{Binding SearchComponent}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                </Border>
+                <Border DockPanel.Dock="Top">
+                    <TextBox Name="ComponentsFilterText"  TextChanged="ComponentsFilterText_Changed" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10" TextWrapping="Wrap" Text=""/>
+                </Border>
+                <Border DockPanel.Dock="Top" MaxHeight="450">
+                    <ScrollViewer Name="AllComponentsSV" CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListView Name="AllComponentsViev">
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="True">
+                                    <GridView.Columns>
+                                        <GridViewColumn  Width="auto" Header="{Binding Component}"
+                                                 DisplayMemberBinding="{Binding Name}" />
+                                        <GridViewColumn  Width="auto" Header= "{Binding Price}"
+                                                 DisplayMemberBinding="{Binding Value}"/>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </Border>
+                <Border DockPanel.Dock="Bottom">
+                    <Button Content="{Binding AddComponent}" Margin="10,5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" MinWidth="50" MaxHeight="50" Click="AddComponentToReciepeList"/>
+                </Border>
+            <Border DockPanel.Dock="Bottom">
+                <Button Content="{Binding DeleteComponent}" Margin="10,5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" MinWidth="50" MaxHeight="50" Click="DeleteComponentFromReciepeList"/>
+            </Border>
+
+        </DockPanel>
+
+
+            <DockPanel Name="ButtonsPanelDock" DockPanel.Dock="Bottom" MaxHeight="120">
+                <Border Background="Green" DockPanel.Dock="Left">
+                    <ScrollViewer Name="ComponentsInSV" CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListView Name="ComponentsInViev">
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="True">
+                                    <GridView.Columns>
+                                        <GridViewColumn  Width="auto" Header="{Binding Component}"
+                                                 DisplayMemberBinding="{Binding Name}" />
+                                        <GridViewColumn  Width="auto" Header="{Binding Amount}"
+                                                 DisplayMemberBinding="{Binding Amount, StringFormat=G4}" />
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </Border>
+
+                <DockPanel DockPanel.Dock="Left">
+                    <DockPanel DockPanel.Dock="Left">
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <Button Content="{Binding Add}" Margin="10,10" HorizontalAlignment="Stretch" MinWidth="50"/>
+                        </Border>
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <Button Content="{Binding Update}" Margin="10,10" HorizontalAlignment="Stretch" MinWidth="50"/>
+                        </Border>
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <Button Content="{Binding Delete}" Margin="10,10" HorizontalAlignment="Stretch" MinWidth="50"/>
+                        </Border>
+                    </DockPanel>
+                    <DockPanel DockPanel.Dock="Left">
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBlock Text="{Binding Name}"  Margin="10" TextWrapping="Wrap"/>
+                        </Border>
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBlock Grid.Column="1"  Margin="10" TextWrapping="Wrap" Text="Ilosć osób"/>
+                        </Border>
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBlock Text="{Binding Chosen}" Margin="10" TextWrapping="Wrap"/>
+                        </Border>
+                    </DockPanel>
+
+                    <DockPanel DockPanel.Dock="Left">
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBox Name="RecipeNameTextBox"  Margin="10" TextWrapping="Wrap" Text=""/>
+                        </Border>
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBox Name="NumberOfPeopleTextBox"  Margin="10" TextWrapping="Wrap" Text=""/>
+                        </Border>
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBlock Name="ChosenNameTextBlock" Text="{Binding Name}" Grid.Column="1"  Margin="10" TextWrapping="Wrap"/>
+                        </Border>
+                    </DockPanel>
+                </DockPanel>
+
+            </DockPanel>
+
+
+            <Border DockPanel.Dock="Top" MaxHeight="300" VerticalAlignment="Top">
+                <Grid Background="Black" >
+                    <RichTextBox Name="ChosenRecipeRichTextBox" Background="AliceBlue" Margin="1,1">
+                        <FlowDocument >
+                            <Paragraph>
+                                <Run Name="RecipeText" />
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </Border>
+
+
+
+
+        </DockPanel>
+
+    </Window>

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CookingBook.DataTypes
 {
-    class Recipe
+    public class Recipe : CookBookDataTypeBase
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        
         public string RecipeTxt { get; set; }
         public int Persons { get; set; }
 

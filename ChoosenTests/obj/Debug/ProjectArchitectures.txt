@@ -1,1 +1,0 @@
-E:\MySolutions\ChoosenTests\ChoosenTests.csproj;neutral

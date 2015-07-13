@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 
 namespace CookingBook.DataTypes
 {
-    class Component
+    public class Component : CookBookDataTypeBase
     {
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Single Value { get; set; }
-       
+        public string Value { get; set; }
 
-        public Component(int _id, string _name, Single _value)
+        public string Amount { get; set; }
+        public Component(int _id, string _name, string _value="0", string _amount = "0")
         {
             this.Id = _id;
             this.Name = _name;
             this.Value = _value;
+            this.Amount = _amount;
             
         }
-        public Component(string _name, Single _value)
+        public Component(string _name, string _value, string _amount = "0")
         {
             this.Name = _name;
             this.Value = _value;
+            this.Amount = _amount;
         }
     }
 }

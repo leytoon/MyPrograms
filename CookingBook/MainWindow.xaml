@@ -14,9 +14,11 @@
 
             <MenuItem  Header="{Binding Action}">
                 <MenuItem Header="{Binding Recipe}" Click="ShowAddRecepieWindow"/>
-                <MenuItem Header="{Binding Component}" Click="ShowAddResourceWindow"/>
+                <MenuItem Header="{Binding Component}" Click="ShowAddComponentWindow"/>
                 
             </MenuItem>
+
+            <MenuItem  Header="{Binding SearchRecipie}" Click="ShowSearchRecipeWindow"></MenuItem>
         </Menu>
     </Grid>
 </Window>

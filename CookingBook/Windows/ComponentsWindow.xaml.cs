@@ -22,7 +22,7 @@ namespace CookingBook.Windows
         SQLIteClient SQLCli = null;
 
         Component AddResObj;
-        Component UpdateResObj = new Component(1, "0", 1);
+        Component UpdateResObj = new Component(1, "0", "0");
         
         private bool MakeList(SQLIteClient SQLTest)
         {
@@ -33,15 +33,21 @@ namespace CookingBook.Windows
             for (int i = 0; i < data.Tables[0].Rows.Count; i++)
             {
                 var Items = data.Tables[0].Rows[i].ItemArray;
-                ResourceList.Add(new Component(Convert.ToInt32(Items[0]), Items[1].ToString(), Convert.ToSingle(Items[2])));
+                ResourceList.Add(new Component(Convert.ToInt32(Items[0]), Items[1].ToString(), Items[2].ToString()));
 
             }
 
-            ResourcesList.ItemsSource = ResourceList;
+            ComponentsListViev.ItemsSource = ResourceList;
             
             return true;
         }
-
+        private bool ComponentFilter(object item)
+        {
+            if (String.IsNullOrEmpty(ComponentsFilterTextt.Text))
+                return true;
+            else
+                return ((item as Component).Name.IndexOf(ComponentsFilterTextt.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+        }
         private void getSelectedItem(object sender, RoutedEventArgs e)
         {
             var item = sender as ListView;
@@ -53,17 +59,20 @@ namespace CookingBook.Windows
         private void Add(object sender, RoutedEventArgs e)
         {
 
-            if (TxtValidator.IsPriceValid(Convert.ToString(ValueTextBox.Text)))
+            if (TxtValidator.IsPriceValid(ValueTextBox.Text.ToString().Replace(".",",")))
             {
-                AddResObj = new Component(ResourceTextBox.Text.ToString(), Convert.ToSingle(ValueTextBox.Text));
+                AddResObj = new Component(ResourceTextBox.Text.ToString(), ValueTextBox.Text.ToString());
 
                 SQLCli.SetData("INSERT INTO ResourcesTable (Resource,Value)VALUES ('" +
                         AddResObj.Name + "','" +
-                        AddResObj.Value + "')"); //make something with casts to this 
+                        AddResObj.Value.Replace(".", ",") + "')");
 
                 ResourceTextBox.Text = "";
                 ValueTextBox.Text = "";
                 MakeList(SQLCli);
+
+                CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
+                ComponentViev.Filter = ComponentFilter;//To allow search after Addition
               
             }
             else
@@ -74,16 +83,27 @@ namespace CookingBook.Windows
 
         private void Update(object sender, RoutedEventArgs e)
         {
-           
-            if (TxtValidator.IsPriceValid(Convert.ToString(ValueTextBox.Text)))
+            if (string.IsNullOrEmpty(UpValueTextBox.Text))
             {
-                SQLCli.UpdateData("UPDATE ResourcesTable SET Resource= '" +
-                    UpResourceTextBox.Text + "',Value='" + UpValueTextBox.Text + "' WHERE Idres='" + UpdateResObj.Id + "'");
-                    
+                UpValueTextBox.Text = UpdateResObj.Value;
+            }
+            else if (TxtValidator.IsPriceValid(UpValueTextBox.Text.ToString().Replace(".", ",")))
+            {
+                if (string.IsNullOrEmpty(UpResourceTextBox.Text))
+                    UpResourceTextBox.Text = UpdateResObj.Name;
+
+                SQLCli.UpdateData("UPDATE ResourcesTable SET Resource= '" + UpResourceTextBox.Text +
+                    "',Value='" + UpValueTextBox.Text.Replace(".", ",") +
+                    "' WHERE Idres='" + UpdateResObj.Id + "'");
+
                 UpResourceTextBox.Text = "";
                 UpValueTextBox.Text = "";
-                
+
                 MakeList(SQLCli);
+
+                //pomyśleć jakby to można skrócić
+                CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
+                ComponentViev.Filter = ComponentFilter;//To allow search after Updation
             }
             else
             {
@@ -97,6 +117,11 @@ namespace CookingBook.Windows
             SQLCli.DeleteData("DELETE FROM RelationsTable WHERE ComponentId='" + UpdateResObj.Id + "'");
             MakeList(SQLCli);
         }
+
+        private void ComponentTextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource).Refresh();
+        }
         public ComponentsWindow()
         {
             InitializeComponent();
@@ -105,6 +130,9 @@ namespace CookingBook.Windows
 
             SQLCli = new SQLIteClient("", "", MainWindow.DbPath, "");
             MakeList(SQLCli);
+
+            CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
+            ComponentViev.Filter = ComponentFilter;//To allow search
 
         }
     }

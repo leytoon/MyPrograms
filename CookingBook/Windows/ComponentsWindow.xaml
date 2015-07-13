@@ -13,7 +13,7 @@
 
             <!--DataViev-->
         <ScrollViewer  Name="ComponentSV" CanContentScroll="True" Grid.Column="0">
-            <ListView Name="ResourcesList" MouseLeftButtonUp="getSelectedItem">
+            <ListView Name="ComponentsListViev" MouseLeftButtonUp="getSelectedItem" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListView.View>
                     <GridView AllowsColumnReorder="True">
                         <GridView.Columns>
@@ -21,7 +21,7 @@
                             <GridViewColumn  Width="auto" Header="{Binding Component}"
                                              DisplayMemberBinding="{Binding Name}" />
                             <GridViewColumn  Width="auto" Header= "{Binding Price}"
-                                             DisplayMemberBinding="{Binding Value}"/>
+                                             DisplayMemberBinding="{Binding Value, StringFormat=F}"/>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
@@ -61,8 +61,8 @@
                         </Button>
                         <TextBlock Text="{Binding Component}" Grid.Column="0" Grid.Row="0" />
                         <TextBlock Text="{Binding Price}" Grid.Column="1" Grid.Row="0"  />
-                        <TextBox  Name="ResourceTextBox" Grid.Column="0" Grid.Row="1" Text=" " MinWidth="30"/>
-                        <TextBox  Name="ValueTextBox" Grid.Column="1" Grid.Row="1" Text=" " MinWidth="60" MaxWidth="80" HorizontalAlignment="Left"/>
+                        <TextBox  Name="ResourceTextBox" Grid.Column="0" Grid.Row="1" Text="" MinWidth="30"/>
+                        <TextBox  Name="ValueTextBox" Grid.Column="1" Grid.Row="1" Text="" MinWidth="60" MaxWidth="80" HorizontalAlignment="Left"/>
                     </Grid>
                 </GroupBox>
                 <!--Update panel-->
@@ -90,15 +90,15 @@
 
                         <TextBlock Text="{Binding Component}" Grid.Column="0" Grid.Row="0" />
                         <TextBlock Text="{Binding Price}" Grid.Column="1" Grid.Row="0"  />
-                        <TextBox  Name="UpResourceTextBox" Grid.Column="0" Grid.Row="1" Text=" " MinWidth="30"/>
-                        <TextBox  Name="UpValueTextBox" Grid.Column="1" Grid.Row="1" Text=" " MinWidth="60" MaxWidth="80" HorizontalAlignment="Left"/>
+                        <TextBox  Name="UpResourceTextBox" Grid.Column="0" Grid.Row="1" Text="" MinWidth="30"/>
+                        <TextBox  Name="UpValueTextBox" Grid.Column="1" Grid.Row="1" Text="" MinWidth="60" MaxWidth="80" HorizontalAlignment="Left"/>
                         <TextBlock Name="UpResourceTextBlock" Text="{Binding Component}" Grid.Column="0" Grid.Row="2" />
                         <TextBlock Name="UpValueTextBlock" Text="{Binding Price}" Grid.Column="1" Grid.Row="2"  />
                     </Grid>
                 </GroupBox>
                 <!--Delete panel-->
-                <GroupBox  Header="{Binding DeleteComponent}"  VerticalAlignment="Bottom"  >
-
+                <GroupBox  Header="{Binding Search}"  VerticalAlignment="Bottom"  >
+                    <TextBox  Name="ComponentsFilterTextt" Text="" MinWidth="60"  HorizontalAlignment="Stretch" TextChanged="ComponentTextChanged"/>
                 </GroupBox>
             </StackPanel>
             
