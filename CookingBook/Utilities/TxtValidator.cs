@@ -23,9 +23,16 @@ namespace CookingBook.Utilities
         }
         static public bool IsPersonsValid(string txt)
         {
-            Regex amount = new Regex("[1-9]{1,2}");
+            Regex amount = new Regex("[1-9]{1,3}");
 
             return amount.IsMatch(txt);
         }
+        static public bool IsIntegerValid(string txt)
+        {
+            Regex amount = new Regex("[0-9]{1,3}");
+
+            return amount.IsMatch(txt);
+        }
+
     }
 }

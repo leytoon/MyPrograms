@@ -89,25 +89,30 @@
 
                 <DockPanel DockPanel.Dock="Left">
                     <DockPanel DockPanel.Dock="Left">
+                        
                         <Border Background="White" DockPanel.Dock="Top">
                             <TextBlock Text="Minimalna ilość Zgodnych skł"  Margin="0" TextWrapping="Wrap"/>
                         </Border>
-                        <Border Background="White" DockPanel.Dock="Top">
-                            <TextBox Name="MinimumOfComponentsText" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="0" TextWrapping="Wrap" Text=""/>
-                        </Border>
-                        <Border Background="White" DockPanel.Dock="Top">
-                            <TextBlock Text="Minimalna ilość Zgodnych osób"  Margin="0,10,0,0" TextWrapping="Wrap"/>
-                        </Border>
-                    <Border Background="White" DockPanel.Dock="Top">
-                        <TextBox Name="MinimumOfPPLText" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="0" TextWrapping="Wrap" Text=""/>
-                    </Border>
-                    <Border Background="White" DockPanel.Dock="Top">
-                        <TextBlock Text="Maxymalny czas przygotowywania "  Margin="0,10,0,0" TextWrapping="Wrap"/>
-                    </Border>
                         
-                    <Border Background="White" DockPanel.Dock="Top">
-                        <TextBox Name="MaxTime" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="0" TextWrapping="Wrap" Text=""/>
-                    </Border>
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBox Name="cConstrain" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="0" TextWrapping="Wrap" Text=""/>
+                        </Border>
+                        
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBlock Text="TimeConstrain"  Margin="0,10,0,0" TextWrapping="Wrap"/>
+                        </Border>
+                        
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBox Name="tConstrain" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="0" TextWrapping="Wrap" Text=""/>
+                        </Border>
+                        
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBlock Text="Minimalna ilość osób "  Margin="0,10,0,0" TextWrapping="Wrap"/>
+                        </Border>
+                        
+                        <Border Background="White" DockPanel.Dock="Top">
+                            <TextBox Name="pConstrain" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="0" TextWrapping="Wrap" Text=""/>
+                        </Border>
                 </DockPanel>
                     <DockPanel DockPanel.Dock="Left">
                         

@@ -10,7 +10,7 @@ namespace CookBookChoosenTests
         [TestMethod]
         public void TextValidation()
         {
-            List<string> integers = new List<string>() {"1", "2", "3", "99", "199", "1992" };
+            List<string> integers = new List<string>() {"0", "1", "2", "3", "99", "199", "1992" };
 
             List<string> price = new List<string>() 
             {"0","1", "2", "3", "99", "199", 
@@ -30,16 +30,17 @@ namespace CookBookChoosenTests
              "99,1", "99,11", "99,111",
              "199,6","199,76","199,766" };
 
-            foreach (var x in integers)
+            /*foreach (var x in integers)
                 Assert.IsTrue(TxtValidator.IsPersonsValid(x));
 
             foreach (var x in price)
                 Assert.IsTrue(TxtValidator.IsPriceValid(x.Replace(".",",")));
             
             foreach (var x in amount)
-                Assert.IsTrue(TxtValidator.IsAmountValid(x.Replace(".", ",")));
+                Assert.IsTrue(TxtValidator.IsAmountValid(x.Replace(".", ",")));*/
 
-
+            foreach (var x in integers)
+                Assert.IsTrue(TxtValidator.IsIntegerValid(x.Replace(".", ",")));
         }
     }
 }

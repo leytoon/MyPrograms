@@ -107,9 +107,25 @@ namespace CookingBook.Windows
         { 
             CollectionViewSource.GetDefaultView(RecipeListViev.ItemsSource).Refresh(); 
         }
-        private void FilteringReciepe(object sender, RoutedEventArgs e) 
+        private void FilteringReciepe(object sender, RoutedEventArgs e)
         {
-            DataCollection.FilterRecipeList(1, 1, 1);
+            if (string.IsNullOrEmpty(tConstrain.Text))
+                tConstrain.Text = "0";
+            if (string.IsNullOrEmpty(pConstrain.Text))
+                pConstrain.Text = "1";
+
+            if (TxtValidator.IsPersonsValid(cConstrain.Text) && TxtValidator.IsIntegerValid(tConstrain.Text) &&
+                TxtValidator.IsIntegerValid(pConstrain.Text))
+            {
+                RecipeListViev.ItemsSource = null;
+                RecipeListViev.ItemsSource = DataCollection.FilterRecipeList(Convert.ToInt32(cConstrain.Text), 
+                                                                            Convert.ToInt32(pConstrain.Text), 
+                                                                            Convert.ToInt32(tConstrain.Text));
+            }
+            else
+            {
+                MessageBox.Show("Invalid Data");
+            }
         }
     }
 }

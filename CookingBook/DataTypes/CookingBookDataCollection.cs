@@ -101,19 +101,13 @@ namespace CookingBook.DataTypes
 
             return ChoosenComponents;
         }
-        //FilterRecipeList Pomyśl jak to usprawnić,=> MOŻE SŁOWNIKIEM TO ZROBIĘ!!! WTEDY WYSZUKIWANIA ZNIKNĄ!!!
-        //Kluczami będą indexy z klas 
-        public List<Recipe> FilterRecipeList(int rConstrain, int pConstrain, int tConstrain)// Making list of all components
+        //FilterRecipeList Pomyśl jak to usprawnić,=> MOŻE SŁOWNIKIEM TO ZROBIĘ + ext methods!!! WTEDY WYSZUKIWANIA ZNIKNĄ!!!
+        //Kluczami będą indexy z klas. Zrobić osobną metodę i sprawdzić jak dla dużej ilości danych różni się czas wykonania
+        public List<Recipe> FilterRecipeList(int cConstrain, int pConstrain, int tConstrain)// Making list of all components
         {
             int[,] conection = new int[2, ListOfRecipes.Count];
+            FilteredListOfRecipes.Clear();
 
-           /* for (int i = 0; i < ListOfRecipes.Count; i++)//Creating table
-            {
-                conection[1,i] = 0;
-                conection[0, i] = ListOfRecipes[i].Id;
-            }*/
-            
-            
             for(int i=0; i<ListOfRelations.Count; i++)//Searching maches in Reciepes
             {
                 for (int j = 0; j < ChoosenComponents.Count; j++)
@@ -121,22 +115,31 @@ namespace CookingBook.DataTypes
                     if (ListOfRelations[i].IdComp == ChoosenComponents[j].Id)
                         for (int k = 0; k < ListOfRecipes.Count; k++)
                         {
-                            conection[1,k] = 0;//Preparing table
                             conection[0, k] = ListOfRecipes[k].Id;//Preparing table
 
                             if (ListOfRecipes[k].Id == ListOfRelations[i].IdRec)
                                 conection[1,k]++;
                         } 
-
                 }
             }
 
-            for (int k = 0; k < ListOfRecipes.Count; k++)//Add mached recipes to list
-                if()
-                FilteredListOfRecipes.Add(ListOfRecipes[conection[0,k]]);
+            for (int j = 0; j < ListOfRecipes.Count; j++)//Add mached recipes to list
+            {
+                for (int k = 0; k < ListOfRecipes.Count; k++)
+                {
+                    if (conection[0, j] == ListOfRecipes[k].Id && conection[1, j] >= cConstrain 
+                        && ListOfRecipes[k].Persons >= pConstrain
+                        && ListOfRecipes[k].Id >= 0)//<-here goes time constrain
+                    {
+                        FilteredListOfRecipes.Add(ListOfRecipes[k]);
+                    }
+                }
+            }
 
             return FilteredListOfRecipes;
         }
+
+
 
     }
 }

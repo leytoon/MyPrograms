@@ -12,7 +12,7 @@ namespace DatabaseLib.DBClients
     {
 
         private string ConnectionString = "Data Source={0}{1}{2}{3};";
-        protected SQLiteConnection Connection;
+        private SQLiteConnection Connection;
         public SQLIteClient(string name, string userName, string dbaddress, string dbpassword)
             : base(name, userName, dbaddress, dbpassword)
         {
