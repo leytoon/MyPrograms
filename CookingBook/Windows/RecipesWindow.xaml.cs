@@ -127,8 +127,8 @@ namespace CookingBook.Windows
         }
         private void DeleteRecipe(object sender, RoutedEventArgs e)
         {
-            SQLCli.DeleteData("DELETE FROM RecipiesTable WHERE Id='" + SelectedRecipe.Id + "'");
-            SQLCli.DeleteData("DELETE FROM RelationsTable WHERE RecipeId='" + SelectedRecipe.Id + "'");
+            SQLCli.SetData("DELETE FROM RecipiesTable WHERE Id='" + SelectedRecipe.Id + "'");
+            SQLCli.SetData("DELETE FROM RelationsTable WHERE RecipeId='" + SelectedRecipe.Id + "'");
             RecipeListViev.ItemsSource = null;
             RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
 

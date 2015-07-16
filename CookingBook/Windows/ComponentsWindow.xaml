@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Components" Height="300" Width="300">
     
-    <Window.Resources>
+    <!--<Window.Resources>
         <ResourceDictionary Source="Styles/BlackCrystal.xaml"></ResourceDictionary>
-    </Window.Resources>
+    </Window.Resources>-->
     
     <Grid Name="ResourceGrid" Background ="Black">
         <Grid.ColumnDefinitions>
@@ -38,9 +38,9 @@
             <Border BorderBrush="white" BorderThickness="2,2,2,2">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <GradientStop Color="GreenYellow" Offset="0.1" />
+                        <GradientStop Color="Gainsboro" Offset="0.1" />
                         <GradientStop Color="WhiteSmoke" Offset="0.3" />
-                        <GradientStop Color="Green" Offset="1.0" />
+                        <GradientStop Color="Green" Offset="2.0" />
                     </LinearGradientBrush>
                 </Border.Background>
             </Border>
@@ -58,7 +58,7 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <!--Add panel-->
-                        <Button Background="{StaticResource GlowFX}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Add">
+                        <Button Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Add">
                             <Button.Content>
                                 <TextBlock><Run Text="{Binding Add}"/></TextBlock>
                             </Button.Content>

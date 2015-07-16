@@ -11,8 +11,7 @@ namespace DatabaseLib.Interfaces
     {
         DataSet GetData(string query);
         int SetData(string query);
-        int UpdateData(string query);
-        int DeleteData(string query);
+
 
     }
 }

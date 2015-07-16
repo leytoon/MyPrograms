@@ -1,0 +1,4 @@
+E:\MySolutions\NeuralNetwork\bin\Debug\NeuralNetwork.dll
+E:\MySolutions\NeuralNetwork\bin\Debug\NeuralNetwork.pdb
+E:\MySolutions\NeuralNetwork\obj\Debug\NeuralNetwork.dll
+E:\MySolutions\NeuralNetwork\obj\Debug\NeuralNetwork.pdb

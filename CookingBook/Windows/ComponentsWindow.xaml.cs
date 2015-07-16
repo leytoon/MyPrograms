@@ -93,7 +93,7 @@ namespace CookingBook.Windows
                 if (string.IsNullOrEmpty(UpResourceTextBox.Text))
                     UpResourceTextBox.Text = UpdateResObj.Name;
 
-                SQLCli.UpdateData("UPDATE ResourcesTable SET Resource= '" + UpResourceTextBox.Text +
+                SQLCli.SetData("UPDATE ResourcesTable SET Resource= '" + UpResourceTextBox.Text +
                     "',Value='" + UpValueTextBox.Text.Replace(".", ",") +
                     "' WHERE Idres='" + UpdateResObj.Id + "'");
 
@@ -114,8 +114,8 @@ namespace CookingBook.Windows
 
         private void Delete(object sender, RoutedEventArgs e)
         {
-            SQLCli.DeleteData("DELETE FROM ResourcesTable WHERE Idres='" + UpdateResObj.Id + "'");
-            SQLCli.DeleteData("DELETE FROM RelationsTable WHERE ComponentId='" + UpdateResObj.Id + "'");
+            SQLCli.SetData("DELETE FROM ResourcesTable WHERE Idres='" + UpdateResObj.Id + "'");
+            SQLCli.SetData("DELETE FROM RelationsTable WHERE ComponentId='" + UpdateResObj.Id + "'");
             MakeList(SQLCli);
         }
 
