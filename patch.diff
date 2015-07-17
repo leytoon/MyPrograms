@@ -1,0 +1,302 @@
+diff --git a/CookBookChoosenTests/UnitTest1.cs b/CookBookChoosenTests/UnitTest1.cs
+index a8547bc..2bfd66e 100644
+--- a/CookBookChoosenTests/UnitTest1.cs
++++ b/CookBookChoosenTests/UnitTest1.cs
+@@ -2,6 +2,7 @@
+ using Microsoft.VisualStudio.TestTools.UnitTesting;
+ using System.Collections.Generic;
+ using CookingBook.Utilities;
++
+ namespace CookBookChoosenTests
+ {
+     [TestClass]
+diff --git a/CookBookChoosenTests/obj/Debug/CookBookChoosenTests.csproj.FileListAbsolute.txt b/CookBookChoosenTests/obj/Debug/CookBookChoosenTests.csproj.FileListAbsolute.txt
+index 264e8af..48c8928 100644
+--- a/CookBookChoosenTests/obj/Debug/CookBookChoosenTests.csproj.FileListAbsolute.txt
++++ b/CookBookChoosenTests/obj/Debug/CookBookChoosenTests.csproj.FileListAbsolute.txt
+@@ -4,9 +4,9 @@ E:\MySolutions\CookBookChoosenTests\bin\Debug\CookingBook.exe
+ E:\MySolutions\CookBookChoosenTests\bin\Debug\DatabaseLib.dll
+ E:\MySolutions\CookBookChoosenTests\bin\Debug\SQLite.NET.dll
+ E:\MySolutions\CookBookChoosenTests\bin\Debug\System.Data.SQLite.dll
++E:\MySolutions\CookBookChoosenTests\bin\Debug\CookingBook.pdb
+ E:\MySolutions\CookBookChoosenTests\bin\Debug\DatabaseLib.pdb
+ E:\MySolutions\CookBookChoosenTests\bin\Debug\System.Data.SQLite.pdb
+ E:\MySolutions\CookBookChoosenTests\obj\Debug\CookBookChoosenTests.csprojResolveAssemblyReference.cache
+ E:\MySolutions\CookBookChoosenTests\obj\Debug\CookBookChoosenTests.dll
+ E:\MySolutions\CookBookChoosenTests\obj\Debug\CookBookChoosenTests.pdb
+-E:\MySolutions\CookBookChoosenTests\bin\Debug\CookingBook.pdb
+diff --git a/CookingBook/CookingBook.csproj b/CookingBook/CookingBook.csproj
+index 67e1e15..33e31d3 100644
+--- a/CookingBook/CookingBook.csproj
++++ b/CookingBook/CookingBook.csproj
+@@ -99,10 +99,6 @@
+       <DependentUpon>MainWindow.xaml</DependentUpon>
+       <SubType>Code</SubType>
+     </Compile>
+-    <Page Include="Windows\Styles\BlackCrystal.xaml">
+-      <SubType>Designer</SubType>
+-      <Generator>MSBuild:Compile</Generator>
+-    </Page>
+     <Page Include="Windows\ComponentsWindow.xaml">
+       <SubType>Designer</SubType>
+       <Generator>MSBuild:Compile</Generator>
+@@ -166,10 +162,6 @@
+       <Name>DatabaseLib</Name>
+     </ProjectReference>
+   </ItemGroup>
+-  <ItemGroup>
+-    <Folder Include="DataTypes\Collections\" />
+-    <Folder Include="DataTypes\Types\" />
+-  </ItemGroup>
+   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+        Other similar extension points exist, see Microsoft.Common.targets.
+diff --git a/CookingBook/Windows/SearchRecipeWindow.xaml.cs b/CookingBook/Windows/SearchRecipeWindow.xaml.cs
+index 22ac048..e136173 100644
+--- a/CookingBook/Windows/SearchRecipeWindow.xaml.cs
++++ b/CookingBook/Windows/SearchRecipeWindow.xaml.cs
+@@ -56,16 +56,17 @@ namespace CookingBook.Windows
+         private void getSelectedRecipe(object sender, MouseButtonEventArgs e)//Get selected Reciepe from list
+         {
+             var item = sender as ListView;
++            if (item.SelectedItems[0] != null)
++            {
++                SelectedRecipe = (Recipe)item.SelectedItems[0];
+ 
+-            SelectedRecipe = (Recipe)item.SelectedItems[0];
+-            
+-            ChosenRecipeRichTextBox.Selection.Text = SelectedRecipe.RecipeTxt;
+-            
++                ChosenRecipeRichTextBox.Selection.Text = SelectedRecipe.RecipeTxt;
+ 
+-            AllComponentsViev.SelectedItem = null;
+-            ComponentsInView.ItemsSource = null;
+-            ComponentsInView.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
+-                                                                               //included in Reciepe 3
++
++                AllComponentsViev.SelectedItem = null;
++                ComponentsInView.ItemsSource = null;
++                ComponentsInView.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
++            }                                                             //included in Reciepe 3
+         }
+ 
+         private void AddComponentToList(object sender, RoutedEventArgs e)
+diff --git a/CookingBook/Windows/Styles/BlackCrystal.xaml b/CookingBook/Windows/Styles/BlackCrystal.xaml
+deleted file mode 100644
+index 552ee20..0000000
+--- a/CookingBook/Windows/Styles/BlackCrystal.xaml
++++ /dev/null
+@@ -1,83 +0,0 @@
+-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+-
+-    <Style
+-        x:Key="ButtonFocusVisual">
+-        <Setter
+-            Property="Control.Template">
+-            <Setter.Value>
+-                <ControlTemplate>
+-                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2" />
+-                </ControlTemplate>
+-            </Setter.Value>
+-        </Setter>
+-    </Style>
+-
+-    <Style x:Key="MetroButton" TargetType="{x:Type Button}">
+-        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+-        <Setter Property="Background" Value="#EEEEEEEE"/>
+-        <Setter Property="Foreground" Value="Black"/>
+-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+-        <Setter Property="Padding" Value="10 5"/>
+-        <Setter Property="FontSize" Value="14" />
+-        <Setter Property="BorderThickness" Value="2" />
+-        <Setter Property="Template">
+-            <Setter.Value>
+-                <ControlTemplate TargetType="{x:Type Button}">
+-                    <Grid>
+-                        <Border
+-                                x:Name="Border"
+-                                Background="{TemplateBinding Background}"
+-                                BorderBrush="{TemplateBinding BorderBrush}"
+-                                BorderThickness="{TemplateBinding BorderThickness}" />
+-
+-                        <ContentPresenter
+-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+-                                Margin="{TemplateBinding Padding}"
+-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+-                                RecognizesAccessKey="True" />
+-                    </Grid>
+-                    <ControlTemplate.Triggers>
+-                        <Trigger Property="IsPressed" Value="True">
+-                            <Setter Property="OpacityMask" Value="#AA888888"/>
+-                            <Setter Property="Margin" Value="2 1" />
+-                        </Trigger>
+-                        <Trigger Property="IsMouseOver" Value="True">
+-                            <Setter Property="BorderThickness" Value="0"/>
+-                            <!--<Setter Property="Background" Value="DimGray"/>-->
+-                            <Setter Property="Foreground" Value="White"/>
+-                        </Trigger>
+-                        <Trigger Property="IsEnabled" Value="false">
+-                            <Setter Property="Foreground" Value="#ADADAD"/>
+-                        </Trigger>
+-                    </ControlTemplate.Triggers>
+-                </ControlTemplate>
+-            </Setter.Value>
+-        </Setter>
+-    </Style>
+-
+-
+-
+-    <RadialGradientBrush x:Key="GlowFX" GradientOrigin=".5,1" Center=".5,1">
+-        <GradientStop Offset="0" Color="#990FFFFF"></GradientStop>
+-        <GradientStop Offset=".5" Color="#660000DD"></GradientStop>
+-        <GradientStop Offset="1" Color="#33000000"></GradientStop>
+-    </RadialGradientBrush>
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-</ResourceDictionary> 
+\ No newline at end of file
+diff --git a/CookingBook/bin/Debug/CookingBook.vshost.exe.manifest b/CookingBook/bin/Debug/CookingBook.vshost.exe.manifest
+new file mode 100644
+index 0000000..061c9ca
+--- /dev/null
++++ b/CookingBook/bin/Debug/CookingBook.vshost.exe.manifest
+@@ -0,0 +1,11 @@
++﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
++<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
++  <assemblyIdentity version="1.0.0.0" name="MyApplication.app"/>
++  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
++    <security>
++      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
++        <requestedExecutionLevel level="asInvoker" uiAccess="false"/>
++      </requestedPrivileges>
++    </security>
++  </trustInfo>
++</assembly>
+diff --git a/CookingBook/bin/Debug/SqlDB.db b/CookingBook/bin/Debug/SqlDB.db
+index bfcaf93..fd8de5d 100644
+Binary files a/CookingBook/bin/Debug/SqlDB.db and b/CookingBook/bin/Debug/SqlDB.db differ
+diff --git a/CookingBook/obj/Debug/CookingBook.csproj.FileListAbsolute.txt b/CookingBook/obj/Debug/CookingBook.csproj.FileListAbsolute.txt
+index cd34ad3..ab51f69 100644
+--- a/CookingBook/obj/Debug/CookingBook.csproj.FileListAbsolute.txt
++++ b/CookingBook/obj/Debug/CookingBook.csproj.FileListAbsolute.txt
+@@ -21,4 +21,3 @@ E:\MySolutions\CookingBook\obj\Debug\CookingBook.Properties.Resources.resources
+ E:\MySolutions\CookingBook\obj\Debug\CookingBook.csproj.GenerateResource.Cache
+ E:\MySolutions\CookingBook\obj\Debug\CookingBook.exe
+ E:\MySolutions\CookingBook\obj\Debug\CookingBook.pdb
+-E:\MySolutions\CookingBook\obj\Debug\Windows\Styles\BlackCrystal.baml
+diff --git a/CookingBook/obj/Debug/CookingBook.g.resources b/CookingBook/obj/Debug/CookingBook.g.resources
+index eee85bf..05a0a58 100644
+Binary files a/CookingBook/obj/Debug/CookingBook.g.resources and b/CookingBook/obj/Debug/CookingBook.g.resources differ
+diff --git a/CookingBook/obj/Debug/Windows/ComponentsWindow.baml b/CookingBook/obj/Debug/Windows/ComponentsWindow.baml
+index de504f1..f5c8ada 100644
+Binary files a/CookingBook/obj/Debug/Windows/ComponentsWindow.baml and b/CookingBook/obj/Debug/Windows/ComponentsWindow.baml differ
+diff --git a/CookingBook/obj/Debug/Windows/ComponentsWindow.g.cs b/CookingBook/obj/Debug/Windows/ComponentsWindow.g.cs
+index eae3268..67f5275 100644
+--- a/CookingBook/obj/Debug/Windows/ComponentsWindow.g.cs
++++ b/CookingBook/obj/Debug/Windows/ComponentsWindow.g.cs
+@@ -1,4 +1,4 @@
+-﻿#pragma checksum "..\..\..\Windows\ComponentsWindow.xaml" "{406ea660-64cf-4c82-b6f0-42d48172a799}" "8E5F4333E6679A1908B3CF099475ED11"
++﻿#pragma checksum "..\..\..\Windows\ComponentsWindow.xaml" "{406ea660-64cf-4c82-b6f0-42d48172a799}" "4B471E638001AAF9C49EBD9B46047EA8"
+ //------------------------------------------------------------------------------
+ // <auto-generated>
+ //     This code was generated by a tool.
+diff --git a/CookingBook/obj/Debug/Windows/ComponentsWindow.g.i.cs b/CookingBook/obj/Debug/Windows/ComponentsWindow.g.i.cs
+index eae3268..67f5275 100644
+--- a/CookingBook/obj/Debug/Windows/ComponentsWindow.g.i.cs
++++ b/CookingBook/obj/Debug/Windows/ComponentsWindow.g.i.cs
+@@ -1,4 +1,4 @@
+-﻿#pragma checksum "..\..\..\Windows\ComponentsWindow.xaml" "{406ea660-64cf-4c82-b6f0-42d48172a799}" "8E5F4333E6679A1908B3CF099475ED11"
++﻿#pragma checksum "..\..\..\Windows\ComponentsWindow.xaml" "{406ea660-64cf-4c82-b6f0-42d48172a799}" "4B471E638001AAF9C49EBD9B46047EA8"
+ //------------------------------------------------------------------------------
+ // <auto-generated>
+ //     This code was generated by a tool.
+diff --git a/CookingBook/obj/Debug/Windows/Styles/BlackCrystal.baml b/CookingBook/obj/Debug/Windows/Styles/BlackCrystal.baml
+deleted file mode 100644
+index 3ab923c..0000000
+Binary files a/CookingBook/obj/Debug/Windows/Styles/BlackCrystal.baml and /dev/null differ
+diff --git a/DatabaseLib/DbClients/SQLClientBase.cs b/DatabaseLib/DbClients/SQLClientBase.cs
+index b272c05..085a030 100644
+--- a/DatabaseLib/DbClients/SQLClientBase.cs
++++ b/DatabaseLib/DbClients/SQLClientBase.cs
+@@ -25,8 +25,7 @@ namespace DatabaseLib.DBClients
+        
+         public abstract DataSet GetData(string Querry);
+         public abstract int SetData(string Querry);
+-        public abstract int UpdateData(string Querry);
+-        public abstract int DeleteData(string Querry);
++
+ 
+     }
+ }
+diff --git a/DatabaseLib/DbClients/SQLIteClient.cs b/DatabaseLib/DbClients/SQLIteClient.cs
+index db77294..fca5b0a 100644
+--- a/DatabaseLib/DbClients/SQLIteClient.cs
++++ b/DatabaseLib/DbClients/SQLIteClient.cs
+@@ -13,6 +13,7 @@ namespace DatabaseLib.DBClients
+ 
+         private string ConnectionString = "Data Source={0}{1}{2}{3};";
+         private SQLiteConnection Connection;
++        
+         public SQLIteClient(string name, string userName, string dbaddress, string dbpassword)
+             : base(name, userName, dbaddress, dbpassword)
+         {
+@@ -42,25 +43,5 @@ namespace DatabaseLib.DBClients
+ 
+             return sqliteCommand.ExecuteNonQuery();
+         }
+-        public override int UpdateData(string querry)
+-        {
+-            this.Connection = new SQLiteConnection(this.ConnectionString);
+-
+-            var sqliteCommand = new SQLiteCommand(querry, this.Connection);
+-
+-            this.Connection.Open();
+-
+-            return sqliteCommand.ExecuteNonQuery();
+-        }
+-        public override int DeleteData(string querry)
+-        {
+-            this.Connection = new SQLiteConnection(this.ConnectionString);
+-
+-            var sqliteCommand = new SQLiteCommand(querry, this.Connection);
+-
+-            this.Connection.Open();
+-
+-            return sqliteCommand.ExecuteNonQuery();
+-        }
+     }
+ }
+diff --git a/DatabaseLib/obj/Debug/DatabaseLib.csproj.FileListAbsolute.txt b/DatabaseLib/obj/Debug/DatabaseLib.csproj.FileListAbsolute.txt
+index 3a18415..f677f70 100644
+--- a/DatabaseLib/obj/Debug/DatabaseLib.csproj.FileListAbsolute.txt
++++ b/DatabaseLib/obj/Debug/DatabaseLib.csproj.FileListAbsolute.txt
+@@ -5,4 +5,3 @@ E:\MySolutions\DatabaseLib\bin\Debug\System.Data.SQLite.dll
+ E:\MySolutions\DatabaseLib\bin\Debug\System.Data.SQLite.pdb
+ E:\MySolutions\DatabaseLib\obj\Debug\DatabaseLib.dll
+ E:\MySolutions\DatabaseLib\obj\Debug\DatabaseLib.pdb
+-E:\MySolutions\DatabaseLib\obj\Debug\DatabaseLib.csprojResolveAssemblyReference.cache
+diff --git a/NeuralNetwork/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs b/NeuralNetwork/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+new file mode 100644
+index 0000000..e69de29
+diff --git a/NeuralNetwork/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs b/NeuralNetwork/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+new file mode 100644
+index 0000000..e69de29
+diff --git a/NeuralNetwork/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs b/NeuralNetwork/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+new file mode 100644
+index 0000000..e69de29

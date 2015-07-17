@@ -13,6 +13,7 @@ namespace DatabaseLib.DBClients
 
         private string ConnectionString = "Data Source={0}{1}{2}{3};";
         private SQLiteConnection Connection;
+        
         public SQLIteClient(string name, string userName, string dbaddress, string dbpassword)
             : base(name, userName, dbaddress, dbpassword)
         {
@@ -33,26 +34,6 @@ namespace DatabaseLib.DBClients
         }
 
         public override int SetData(string querry)
-        {
-            this.Connection = new SQLiteConnection(this.ConnectionString);
-
-            var sqliteCommand = new SQLiteCommand(querry, this.Connection);
-
-            this.Connection.Open();
-
-            return sqliteCommand.ExecuteNonQuery();
-        }
-        public override int UpdateData(string querry)
-        {
-            this.Connection = new SQLiteConnection(this.ConnectionString);
-
-            var sqliteCommand = new SQLiteCommand(querry, this.Connection);
-
-            this.Connection.Open();
-
-            return sqliteCommand.ExecuteNonQuery();
-        }
-        public override int DeleteData(string querry)
         {
             this.Connection = new SQLiteConnection(this.ConnectionString);
 

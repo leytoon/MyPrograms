@@ -25,8 +25,7 @@ namespace DatabaseLib.DBClients
        
         public abstract DataSet GetData(string Querry);
         public abstract int SetData(string Querry);
-        public abstract int UpdateData(string Querry);
-        public abstract int DeleteData(string Querry);
+
 
     }
 }

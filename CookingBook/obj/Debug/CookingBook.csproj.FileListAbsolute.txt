@@ -21,4 +21,3 @@ E:\MySolutions\CookingBook\obj\Debug\CookingBook.Properties.Resources.resources
 E:\MySolutions\CookingBook\obj\Debug\CookingBook.csproj.GenerateResource.Cache
 E:\MySolutions\CookingBook\obj\Debug\CookingBook.exe
 E:\MySolutions\CookingBook\obj\Debug\CookingBook.pdb
-E:\MySolutions\CookingBook\obj\Debug\Windows\Styles\BlackCrystal.baml

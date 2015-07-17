@@ -56,16 +56,17 @@ namespace CookingBook.Windows
         private void getSelectedRecipe(object sender, MouseButtonEventArgs e)//Get selected Reciepe from list
         {
             var item = sender as ListView;
+            if (item.SelectedItems[0] != null)
+            {
+                SelectedRecipe = (Recipe)item.SelectedItems[0];
 
-            SelectedRecipe = (Recipe)item.SelectedItems[0];
-            
-            ChosenRecipeRichTextBox.Selection.Text = SelectedRecipe.RecipeTxt;
-            
+                ChosenRecipeRichTextBox.Selection.Text = SelectedRecipe.RecipeTxt;
 
-            AllComponentsViev.SelectedItem = null;
-            ComponentsInView.ItemsSource = null;
-            ComponentsInView.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
-                                                                               //included in Reciepe 3
+
+                AllComponentsViev.SelectedItem = null;
+                ComponentsInView.ItemsSource = null;
+                ComponentsInView.ItemsSource = DataCollection.GetComponentList(SelectedRecipe); //Filling List of Components 
+            }                                                             //included in Reciepe 3
         }
 
         private void AddComponentToList(object sender, RoutedEventArgs e)
