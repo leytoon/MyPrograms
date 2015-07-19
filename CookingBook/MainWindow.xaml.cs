@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CookingBook.Windows;
 using CookingBook.Utilities;
+using CookingBook.DataTypes;
 
 namespace CookingBook
 {
@@ -31,6 +32,15 @@ namespace CookingBook
             
             SelectedLanguage = "PL";
             CookingBookLanguageSelect.ChangeLanuage(SelectedLanguage, this);
+            
+            
+           /* RecipiesTable Expample = new RecipiesTable() {dName = "ddEntity Test", Persons = 2, RecipeTxt = "Test Entity Frameworka" };
+
+            using (var context = new CookingBookDbContext())
+            {
+                context.ListOfRecipes.Add(Expample);
+                context.SaveChanges();
+            }*/
             
         }
         void ChangeToENG(object sender, RoutedEventArgs e)

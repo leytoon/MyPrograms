@@ -13,6 +13,9 @@ namespace CookingBook.DataTypes
         public string Value { get; set; }
 
         public string Amount { get; set; }
+
+        public int IsUnit { get; set; }
+
         public Component(int _id, string _name, string _value="0", string _amount = "0")
         {
             this.Id = _id;
@@ -33,6 +36,8 @@ namespace CookingBook.DataTypes
             this.Name = row.ItemArray[1].ToString();
             this.Value = row.ItemArray[2].ToString();
             this.Amount = _amount;
+           // this.IsUnit = Convert.ToInt32(row.ItemArray[3]);
+          
         }
 
     }

@@ -20,5 +20,6 @@
 
             <MenuItem  Header="{Binding SearchRecipie}" Click="ShowSearchRecipeWindow"></MenuItem>
         </Menu>
+        
     </Grid>
 </Window>

@@ -13,7 +13,7 @@ namespace CookingBook.DataTypes
         SQLIteClient SQLCli;
 
         public List<Recipe> ListOfRecipes = new List<Recipe>();
-        public List<Component> ListOfComponents = new List<Component>();
+        public List<Component> ListOfComponents = new List<Component>(); 
         public List<Component> ChoosenComponents = new List<Component>();
         public List<Recipe> FilteredListOfRecipes = new List<Recipe>();
         public List<Relation> ListOfRelations;
@@ -73,6 +73,8 @@ namespace CookingBook.DataTypes
 
         public List<Component> GetFullComponentList()// Making list of all components
         {
+            ListOfComponents.Clear();
+
             var data = SQLCli.GetData("select * from ResourcesTable");
 
             for (int i = 0; i < data.Tables[0].Rows.Count; i++)
@@ -81,28 +83,28 @@ namespace CookingBook.DataTypes
             return ListOfComponents;
         }
 
-        public List<Component> DeleteComponentFromList(Component selected)// Making list of all components
+        public List<Component> DeleteComponentFromList(Component selected)
         {
             if (this.ListOfComponents.Count != 0)
                 this.ListOfComponents.Remove(selected);
             
             return ListOfComponents;
         }
-        public List<Component> DeleteComponentFromChosenList(Component selected)// Making list of all components
+        public List<Component> DeleteComponentFromChosenList(Component selected)
         {
             if (this.ChoosenComponents.Count != 0)
                 this.ChoosenComponents.Remove(selected);
 
             return ChoosenComponents;
         }
-        public List<Component> AddComponentToList(Component selected)// Making list of all components
+        public List<Component> AddComponentToList(Component selected)
         {
             this.ChoosenComponents.Add(selected);
 
             return ChoosenComponents;
         }
-        //FilterRecipeList Pomyśl jak to usprawnić,=> MOŻE SŁOWNIKIEM TO ZROBIĘ + ext methods!!! WTEDY WYSZUKIWANIA ZNIKNĄ!!!
-        //Kluczami będą indexy z klas. Zrobić osobną metodę i sprawdzić jak dla dużej ilości danych różni się czas wykonania
+
+        //FilterRecipeList Pomyśl jak zmniejszyć ilość kodu, ta metoda działa popawnie
         public List<Recipe> FilterRecipeList(int cConstrain, int pConstrain, int tConstrain)// Making list of all components
         {
             int[,] conection = new int[2, ListOfRecipes.Count];
@@ -112,7 +114,7 @@ namespace CookingBook.DataTypes
             {
                 for (int j = 0; j < ChoosenComponents.Count; j++)
                 {
-                    if (ListOfRelations[i].IdComp == ChoosenComponents[j].Id)
+                    if (ChoosenComponents[j].Id!=null && ListOfRelations[i].IdComp == ChoosenComponents[j].Id)
                         for (int k = 0; k < ListOfRecipes.Count; k++)
                         {
                             conection[0, k] = ListOfRecipes[k].Id;//Preparing table
@@ -139,7 +141,7 @@ namespace CookingBook.DataTypes
             return FilteredListOfRecipes;
         }
 
-
+     
 
     }
 }
