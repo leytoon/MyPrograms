@@ -29,8 +29,8 @@ namespace CookingBook.Utilities
         CookinBookDictionary() 
         {
             CookingDictionary = new Dictionary<string, CookingBookLabelNames>(){ 
-            {"PL",new CookingBookLabelNames{ All="Wszystko", Refresh="Odśwież",Persons="Osoby" ,Amount="Ilość", Search="Wyszukaj", Chosen="Wybrany", Main="Główne", Add="Dodaj", Delete="Usuń", Update="Zaktualizuj", Component="Składnik", Name="Nazwa", Price="Cena", Recipe="Przepis", Window="Okno", Menu="Menu", Action="Akcja"  }},
-            {"ENG",new CookingBookLabelNames{All="All", Refresh="Refresh", Persons="Persons", Amount="Amount", Search="Search", Chosen="Chosen", Main="Main", Add="Add", Delete="Delete", Update="Update", Component="Component", Name="Name", Price="Price", Recipe="Recipe", Window="Window", Menu="Menu", Action="Action"  }}};
+            {"PL",new CookingBookLabelNames{ Base="Baza", From="z", Migration="Migracja", Server="Server", To="do", All="Wszystko", Refresh="Odśwież",Persons="Osoby" ,Amount="Ilość", Search="Wyszukaj", Chosen="Wybrany", Main="Główne", Add="Dodaj", Delete="Usuń", Update="Zaktualizuj", Component="Składnik", Name="Nazwa", Price="Cena", Recipe="Przepis", Window="Okno", Menu="Menu", Action="Akcja"  }},
+            {"ENG",new CookingBookLabelNames{Base="Base", From="from", Migration="Migration", Server="Server", To="to", All="All", Refresh="Refresh", Persons="Persons", Amount="Amount", Search="Search", Chosen="Chosen", Main="Main", Add="Add", Delete="Delete", Update="Update", Component="Component", Name="Name", Price="Price", Recipe="Recipe", Window="Window", Menu="Menu", Action="Action"  }}};
                 
         }
     }

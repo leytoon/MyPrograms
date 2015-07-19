@@ -13,8 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CookingBook.Windows;
+using DatabaseLib.DBClients;
 using CookingBook.Utilities;
 using CookingBook.DataTypes;
+using DatabaseLib.Interfaces;
+using Autofac;
+using Autofac.Core;
 
 namespace CookingBook
 {
@@ -32,15 +36,19 @@ namespace CookingBook
             
             SelectedLanguage = "PL";
             CookingBookLanguageSelect.ChangeLanuage(SelectedLanguage, this);
-            
-            
-           /* RecipiesTable Expample = new RecipiesTable() {dName = "ddEntity Test", Persons = 2, RecipeTxt = "Test Entity Frameworka" };
 
-            using (var context = new CookingBookDbContext())
-            {
-                context.ListOfRecipes.Add(Expample);
-                context.SaveChanges();
-            }*/
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<SQLIteClient>().As<IDbClient>().WithParameters( new Parameter[] { 
+                                  new NamedParameter("name", ""), 
+                                  new NamedParameter("username", ""), 
+                                  new NamedParameter("DbPath",DbPath), 
+                                  new NamedParameter("dbaddress", ""),
+                                  new NamedParameter("dbpassword", "")});
+
+            var container = builder.Build();
+
+            var service = container.Resolve<SQLIteClient>();
             
         }
         void ChangeToENG(object sender, RoutedEventArgs e)

@@ -25,7 +25,35 @@ namespace CookingBook.Utilities
         public string Persons { get; set; }
         public string Refresh { get; set; }
         public string All { get; set; }
+        public string Base { get; set; }
+        public string Server { get; set; }
+        public string Migration{ get; set; }
+        public string To { get; set; }
+        public string From { get; set; }
+        public string FromBaseToBase
+        {
+            get
+            {
+                return this.Base + "-" + this.Base;
+            }
+        }
 
+        public string FromBaseToServer
+        {
+            get
+            {
+                return this.Base + "-" + this.Server;
+            }
+        }
+
+        public string FromServerToBase
+        {
+            get
+            {
+                return this.Server + "-" + this.Base;
+            }
+        }
+            
         public string RefreshAll
         {
             get

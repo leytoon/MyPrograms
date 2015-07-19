@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="SQLite.NET">
       <HintPath>C:\Users\Mat\Documents\Visual Studio 2013\Projects\Książka\Książka\bin\Debug\SQLite.NET.dll</HintPath>
     </Reference>
@@ -69,6 +72,9 @@
       <Project>{0ecd128c-1c69-47ed-bfec-493f56bb499d}</Project>
       <Name>DatabaseLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
