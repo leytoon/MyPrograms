@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookingBook", "CookingBook\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookBookChoosenTests", "CookBookChoosenTests\CookBookChoosenTests.csproj", "{A16C514A-F7B5-498A-8BD6-01F930A2B2AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFThemes", "WPFThemes\WPFThemes.csproj", "{D7A74311-3664-40AF-9183-9A22725B0A99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,16 @@ Global
 		{A16C514A-F7B5-498A-8BD6-01F930A2B2AE}.Release|ARM.ActiveCfg = Release|Any CPU
 		{A16C514A-F7B5-498A-8BD6-01F930A2B2AE}.Release|x64.ActiveCfg = Release|Any CPU
 		{A16C514A-F7B5-498A-8BD6-01F930A2B2AE}.Release|x86.ActiveCfg = Release|Any CPU
+		{D7A74311-3664-40AF-9183-9A22725B0A99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A74311-3664-40AF-9183-9A22725B0A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A74311-3664-40AF-9183-9A22725B0A99}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{D7A74311-3664-40AF-9183-9A22725B0A99}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D7A74311-3664-40AF-9183-9A22725B0A99}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D7A74311-3664-40AF-9183-9A22725B0A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A74311-3664-40AF-9183-9A22725B0A99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A74311-3664-40AF-9183-9A22725B0A99}.Release|ARM.ActiveCfg = Release|Any CPU
+		{D7A74311-3664-40AF-9183-9A22725B0A99}.Release|x64.ActiveCfg = Release|Any CPU
+		{D7A74311-3664-40AF-9183-9A22725B0A99}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

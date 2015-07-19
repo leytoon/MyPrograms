@@ -35,7 +35,7 @@ namespace CookingBook.Windows
 
             DataCollection = new CookingBookDataCollection(SQLCli);
 
-            MainDockPanel.DataContext = CookinBookDictionary.Instance.GetNames(MainWindow.SelectedLanguage);
+            MainGrid.DataContext = CookinBookDictionary.Instance.GetNames(MainWindow.SelectedLanguage);
            
             RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
             AllComponentsViev.ItemsSource = DataCollection.GetFullComponentList();
@@ -64,12 +64,12 @@ namespace CookingBook.Windows
         }
         private void AddComponentToReciepeList(object sender, RoutedEventArgs e)
         {
-            if (SelectedRecipe != null && TxtValidator.IsAmountValid(AmountOfComponentTextBox.Text.Replace(".", ",")))
+            //var SR = (Recipe)RecipeListViev.SelectedItems[0];//SelectedRecipe
+            var SC = (Component)AllComponentsViev.SelectedItem;//SelectedComponent
+
+            if (SelectedRecipe != null && SC!= null && TxtValidator.IsAmountValid(AmountOfComponentTextBox.Text.Replace(".", ",")))
             {
-                var SR = (Recipe)RecipeListViev.SelectedItems[0];//SelectedRecipe
-                var SC = (Component)AllComponentsViev.SelectedItem;//SelectedComponent
-               
-                string querry = "INSERT INTO RelationsTable (ComponentId,RecipeId,Amount)VALUES('" + SC.Id + "','" + SR.Id + "','" +AmountOfComponentTextBox.Text.Replace(".",",") + "')";
+                string querry = "INSERT INTO RelationsTable (ComponentId,RecipeId,Amount)VALUES('" + SC.Id + "','" + SelectedRecipe.Id + "','" + AmountOfComponentTextBox.Text.Replace(".", ",") + "')";
                 SQLCli.SetData(querry);
 
                 ComponentsInViev.ItemsSource = null;
@@ -85,12 +85,11 @@ namespace CookingBook.Windows
 
         private void DeleteComponentFromReciepeList(object sender, RoutedEventArgs e) 
         {
-
-            if (ComponentsInViev.Items.Count != 0)
+            if (ComponentsInViev.SelectedItem != null && RecipeListViev.SelectedItem != null)
             {
                 var SR = (Recipe)RecipeListViev.SelectedItems[0];//SelectedRecipe
                 var SC = (Component)ComponentsInViev.SelectedItem;//SelectedComponent
-
+      
                 string querry = "DELETE FROM RelationsTable WHERE ComponentId='" + SC.Id + "'";
                 SQLCli.SetData(querry);
 
@@ -107,16 +106,23 @@ namespace CookingBook.Windows
 
         private void AddNewRecipe (object sender, RoutedEventArgs e) 
         {
-            ChosenRecipeRichTextBox.SelectAll();
-           
-            string querry = "INSERT INTO RecipiesTable (Name,Recipe,Persons)VALUES('" + RecipeNameTextBox.Text + "','" + ChosenRecipeRichTextBox.Selection.Text + "','" + NumberOfPeopleTextBox.Text + "')";
-            SQLCli.SetData(querry);
-            RecipeListViev.ItemsSource = null;
-            RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
+            if (RecipeNameTextBox.Text != "")
+            {
+                ChosenRecipeRichTextBox.SelectAll();
 
-            CollectionView RecipeViev = (CollectionView)CollectionViewSource.GetDefaultView(RecipeListViev.ItemsSource);
-            RecipeViev.Filter = (item => (String.IsNullOrEmpty(RecipeFilterText.Text) ? true : ((item as Recipe).Name.IndexOf(RecipeFilterText.Text, StringComparison.OrdinalIgnoreCase) >= 0)));
+                string querry = "INSERT INTO RecipiesTable (Name,Recipe,Persons)VALUES('" +
+                    RecipeNameTextBox.Text + "','" +
+                    ChosenRecipeRichTextBox.Selection.Text + "','" +
+                    NumberOfPeopleTextBox.Text + "')";
 
+                SQLCli.SetData(querry);
+                RecipeListViev.ItemsSource = null;
+                RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
+
+                CollectionView RecipeViev = (CollectionView)CollectionViewSource.GetDefaultView(RecipeListViev.ItemsSource);
+                RecipeViev.Filter = (item => (String.IsNullOrEmpty(RecipeFilterText.Text) ? true : ((item as Recipe).Name.IndexOf(RecipeFilterText.Text, StringComparison.OrdinalIgnoreCase) >= 0)));
+            }
+            else { MessageBox.Show("Niepoprawna nazwa"); }
         }
 
         private void UpdateRecipe(object sender, RoutedEventArgs e) 
@@ -127,13 +133,16 @@ namespace CookingBook.Windows
         }
         private void DeleteRecipe(object sender, RoutedEventArgs e)
         {
-            SQLCli.SetData("DELETE FROM RecipiesTable WHERE Id='" + SelectedRecipe.Id + "'");
-            SQLCli.SetData("DELETE FROM RelationsTable WHERE RecipeId='" + SelectedRecipe.Id + "'");
-            RecipeListViev.ItemsSource = null;
-            RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
+            if (SelectedRecipe != null)
+            {
+                SQLCli.SetData("DELETE FROM RecipiesTable WHERE Id='" + SelectedRecipe.Id + "'");
+                SQLCli.SetData("DELETE FROM RelationsTable WHERE RecipeId='" + SelectedRecipe.Id + "'");
+                RecipeListViev.ItemsSource = null;
+                RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
 
-            CollectionView RecipeViev = (CollectionView)CollectionViewSource.GetDefaultView(RecipeListViev.ItemsSource);
-            RecipeViev.Filter = (item => (String.IsNullOrEmpty(RecipeFilterText.Text) ? true : ((item as Recipe).Name.IndexOf(RecipeFilterText.Text, StringComparison.OrdinalIgnoreCase) >= 0)));
+                CollectionView RecipeViev = (CollectionView)CollectionViewSource.GetDefaultView(RecipeListViev.ItemsSource);
+                RecipeViev.Filter = (item => (String.IsNullOrEmpty(RecipeFilterText.Text) ? true : ((item as Recipe).Name.IndexOf(RecipeFilterText.Text, StringComparison.OrdinalIgnoreCase) >= 0)));
+            }
         }
         private void ComponentsFilterText_Changed(object sender, TextChangedEventArgs e)
         { 

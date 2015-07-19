@@ -21,3 +21,6 @@ E:\MySolutions\CookingBook\obj\Debug\CookingBook.Properties.Resources.resources
 E:\MySolutions\CookingBook\obj\Debug\CookingBook.csproj.GenerateResource.Cache
 E:\MySolutions\CookingBook\obj\Debug\CookingBook.exe
 E:\MySolutions\CookingBook\obj\Debug\CookingBook.pdb
+E:\MySolutions\CookingBook\obj\Debug\App.baml
+E:\MySolutions\CookingBook\bin\Debug\WPFThemes.dll
+E:\MySolutions\CookingBook\bin\Debug\WPFThemes.pdb

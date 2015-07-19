@@ -5,7 +5,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -19,29 +18,13 @@ namespace CookingBook.Windows
 {
     public partial class ComponentsWindow : Window
     {
-        List<Component> ResourceList = null;
+       
         SQLIteClient SQLCli = null;
-
+        CookingBookDataCollection Components = null;
         Component AddResObj;
         Component UpdateResObj = new Component(1, "0", "0");
         
-        private bool MakeList(SQLIteClient SQLTest)
-        {
-            var data = SQLTest.GetData("select * from ResourcesTable");
 
-            ResourceList = new List<Component>();
-
-            for (int i = 0; i < data.Tables[0].Rows.Count; i++)
-            {
-                var Items = data.Tables[0].Rows[i].ItemArray;
-                ResourceList.Add(new Component(Convert.ToInt32(Items[0]), Items[1].ToString(), Items[2].ToString()));
-
-            }
-
-            ComponentsListViev.ItemsSource = ResourceList;
-            
-            return true;
-        }
         private bool ComponentFilter(object item)
         {
             if (String.IsNullOrEmpty(ComponentsFilterTextt.Text))
@@ -52,25 +35,31 @@ namespace CookingBook.Windows
         private void getSelectedItem(object sender, RoutedEventArgs e)
         {
             var item = sender as ListView;
-            UpdateResObj = (Component)item.SelectedItems[0];
 
-            UpResourceTextBlock.Text = UpdateResObj.Name;
-            UpValueTextBlock.Text = UpdateResObj.Value.ToString();
+            if (item.SelectedItems.Count != 0)
+            {
+                UpdateResObj = (Component)item.SelectedItems[0];
+
+                UpResourceTextBlock.Text = UpdateResObj.Name;
+                UpValueTextBlock.Text = UpdateResObj.Value.ToString();
+            }
         }
         private void Add(object sender, RoutedEventArgs e)
         {
 
-            if (TxtValidator.IsPriceValid(ValueTextBox.Text.ToString().Replace(".",",")))
+            if (TxtValidator.IsPriceValid(UpValueTextBox.Text.ToString().Replace(".", ",")) && UpResourceTextBox.Text!="")
             {
-                AddResObj = new Component(ResourceTextBox.Text.ToString(), ValueTextBox.Text.ToString());
+                AddResObj = new Component(UpResourceTextBox.Text.ToString(), UpValueTextBox.Text.ToString());
 
                 SQLCli.SetData("INSERT INTO ResourcesTable (Resource,Value)VALUES ('" +
                         AddResObj.Name + "','" +
                         AddResObj.Value.Replace(".", ",") + "')");
 
-                ResourceTextBox.Text = "";
-                ValueTextBox.Text = "";
-                MakeList(SQLCli);
+                UpResourceTextBox.Text = "";
+                UpValueTextBox.Text = "";
+
+                ComponentsListViev.ItemsSource = null;
+                ComponentsListViev.ItemsSource = Components.GetFullComponentList();
 
                 CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
                 ComponentViev.Filter = ComponentFilter;//To allow search after Addition
@@ -100,7 +89,8 @@ namespace CookingBook.Windows
                 UpResourceTextBox.Text = "";
                 UpValueTextBox.Text = "";
 
-                MakeList(SQLCli);
+                ComponentsListViev.ItemsSource = null;
+                ComponentsListViev.ItemsSource = Components.GetFullComponentList();
 
                 //pomyśleć jakby to można skrócić
                 CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
@@ -114,9 +104,13 @@ namespace CookingBook.Windows
 
         private void Delete(object sender, RoutedEventArgs e)
         {
+
             SQLCli.SetData("DELETE FROM ResourcesTable WHERE Idres='" + UpdateResObj.Id + "'");
             SQLCli.SetData("DELETE FROM RelationsTable WHERE ComponentId='" + UpdateResObj.Id + "'");
-            MakeList(SQLCli);
+            ComponentsListViev.ItemsSource = Components.GetFullComponentList();
+
+            CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
+            ComponentViev.Filter = ComponentFilter;//To allow search after Updation
         }
 
         private void ComponentTextChanged(object sender, TextChangedEventArgs e)
@@ -130,11 +124,15 @@ namespace CookingBook.Windows
             CookingBookLanguageSelect.ChangeLanuage(MainWindow.SelectedLanguage, this);
 
             SQLCli = new SQLIteClient("", "", MainWindow.DbPath, "");
-            MakeList(SQLCli);
+           
+            Components = new CookingBookDataCollection(SQLCli);
+
+            ComponentsListViev.ItemsSource = Components.GetFullComponentList();
 
             CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
             ComponentViev.Filter = ComponentFilter;//To allow search
 
         }
+
     }
 }

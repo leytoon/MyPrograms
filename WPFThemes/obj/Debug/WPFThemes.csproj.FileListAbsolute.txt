@@ -1,0 +1,11 @@
+E:\MySolutions\WPFThemes\bin\Debug\WPFThemes.dll
+E:\MySolutions\WPFThemes\bin\Debug\WPFThemes.pdb
+E:\MySolutions\WPFThemes\obj\Debug\Border.baml
+E:\MySolutions\WPFThemes\obj\Debug\ButtonStyle.baml
+E:\MySolutions\WPFThemes\obj\Debug\Theme.baml
+E:\MySolutions\WPFThemes\obj\Debug\WPFThemes_MarkupCompile.cache
+E:\MySolutions\WPFThemes\obj\Debug\WPFThemes.g.resources
+E:\MySolutions\WPFThemes\obj\Debug\WPFThemes.Properties.Resources.resources
+E:\MySolutions\WPFThemes\obj\Debug\WPFThemes.csproj.GenerateResource.Cache
+E:\MySolutions\WPFThemes\obj\Debug\WPFThemes.dll
+E:\MySolutions\WPFThemes\obj\Debug\WPFThemes.pdb
