@@ -76,7 +76,9 @@
     <Compile Include="Utilities\CookinBookDictionary.cs" />
     <Compile Include="Utilities\CookingBookLabelNames.cs" />
     <Compile Include="Utilities\CookingBookLanguageSelect.cs" />
+    <Compile Include="Utilities\DbDependancyResolver.cs" />
     <Compile Include="Utilities\DigitsConverter.cs" />
+    <Compile Include="Utilities\SQLInjectionParser.cs" />
     <Compile Include="Utilities\TxtValidator.cs" />
     <Compile Include="Windows\ComponentsWindow.xaml.cs">
       <DependentUpon>ComponentsWindow.xaml</DependentUpon>

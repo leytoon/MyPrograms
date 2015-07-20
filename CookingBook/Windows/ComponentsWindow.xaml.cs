@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DatabaseLib.DBClients;
+using DatabaseLib.Interfaces;
 using CookingBook.DataTypes;
 using CookingBook.Utilities;
 
@@ -18,8 +19,8 @@ namespace CookingBook.Windows
 {
     public partial class ComponentsWindow : Window
     {
-       
-        SQLIteClient SQLCli = null;
+
+        IDbHandle DbCli = null;
         CookingBookDataCollection Components = null;
         Component AddResObj;
         Component UpdateResObj = new Component(1, "0", "0");
@@ -47,13 +48,15 @@ namespace CookingBook.Windows
         private void Add(object sender, RoutedEventArgs e)
         {
 
-            if (TxtValidator.IsPriceValid(UpValueTextBox.Text.ToString().Replace(".", ",")) && UpResourceTextBox.Text!="")
+            if (TxtValidator.IsPriceValid(UpValueTextBox.Text.ToString().Replace(".", ",")) 
+                && UpResourceTextBox.Text!=""
+                && SQLInjectionParser.Parse(UpResourceTextBox.Text + UpValueTextBox.Text))
             {
-                AddResObj = new Component(UpResourceTextBox.Text.ToString(), UpValueTextBox.Text.ToString());
+                AddResObj = new Component(UpResourceTextBox.Text, UpValueTextBox.Text);
 
-                SQLCli.SetData("INSERT INTO ResourcesTable (Resource,Value)VALUES ('" +
-                        AddResObj.Name + "','" +
-                        AddResObj.Value.Replace(".", ",") + "')");
+                DbCli.InsertData(string.Format("INSERT INTO ResourcesTable (Resource,Value)VALUES ('{0}','{1}')",
+                   AddResObj.Name, 
+                   AddResObj.Value.Replace(".", ",")));
 
                 UpResourceTextBox.Text = "";
                 UpValueTextBox.Text = "";
@@ -77,14 +80,16 @@ namespace CookingBook.Windows
             {
                 UpValueTextBox.Text = UpdateResObj.Value;
             }
-            else if (TxtValidator.IsPriceValid(UpValueTextBox.Text.ToString().Replace(".", ",")))
+            else if (TxtValidator.IsPriceValid(UpValueTextBox.Text.ToString().Replace(".", ",")) 
+                && SQLInjectionParser.Parse(UpValueTextBox.Text + UpResourceTextBox.Text))
             {
                 if (string.IsNullOrEmpty(UpResourceTextBox.Text))
                     UpResourceTextBox.Text = UpdateResObj.Name;
 
-                SQLCli.SetData("UPDATE ResourcesTable SET Resource= '" + UpResourceTextBox.Text +
-                    "',Value='" + UpValueTextBox.Text.Replace(".", ",") +
-                    "' WHERE Idres='" + UpdateResObj.Id + "'");
+                DbCli.InsertData(string.Format("UPDATE ResourcesTable SET Resource= '{0}',Value='{1}' WHERE Idres='{2}'", 
+                    UpResourceTextBox.Text, 
+                    UpValueTextBox.Text.Replace(".", ","), 
+                    UpdateResObj.Id));
 
                 UpResourceTextBox.Text = "";
                 UpValueTextBox.Text = "";
@@ -104,28 +109,31 @@ namespace CookingBook.Windows
 
         private void Delete(object sender, RoutedEventArgs e)
         {
+            if (ComponentsListViev.SelectedItems.Count != 0)
+            {
+                DbCli.InsertData(string.Format("DELETE FROM ResourcesTable WHERE Idres='{0}'", UpdateResObj.Id));
+                DbCli.InsertData(string.Format("DELETE FROM RelationsTable WHERE ComponentId='{0}'", UpdateResObj.Id));
+                
+                ComponentsListViev.ItemsSource = Components.GetFullComponentList();
 
-            SQLCli.SetData("DELETE FROM ResourcesTable WHERE Idres='" + UpdateResObj.Id + "'");
-            SQLCli.SetData("DELETE FROM RelationsTable WHERE ComponentId='" + UpdateResObj.Id + "'");
-            ComponentsListViev.ItemsSource = Components.GetFullComponentList();
-
-            CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
-            ComponentViev.Filter = ComponentFilter;//To allow search after Updation
+                CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
+                ComponentViev.Filter = ComponentFilter;//To allow search after Updation
+            }
         }
 
         private void ComponentTextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource).Refresh();
         }
-        public ComponentsWindow()
+        public ComponentsWindow(IDbHandle dbCli)
         {
             InitializeComponent();
            
             CookingBookLanguageSelect.ChangeLanuage(MainWindow.SelectedLanguage, this);
 
-            SQLCli = new SQLIteClient("", "", MainWindow.DbPath, "");
+            DbCli = dbCli;
            
-            Components = new CookingBookDataCollection(SQLCli);
+            Components = new CookingBookDataCollection(DbCli);
 
             ComponentsListViev.ItemsSource = Components.GetFullComponentList();
 

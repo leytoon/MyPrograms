@@ -14,6 +14,7 @@ using DatabaseLib.DBClients;
 using CookingBook.DataTypes;
 using CookingBook.Utilities;
 using System.Globalization;
+using DatabaseLib.Interfaces;
 
 namespace CookingBook.Windows
 {
@@ -23,17 +24,17 @@ namespace CookingBook.Windows
        
         CookingBookDataCollection DataCollection;
 
-        SQLIteClient SQLCli = null;
+        IDbHandle DbCli = null;
         
         Recipe SelectedRecipe;
 
-        public RecipesWindow()
+        public RecipesWindow(IDbHandle dbCli)
         {
             InitializeComponent();
 
-            SQLCli = new SQLIteClient("", "", MainWindow.DbPath, "");
+            DbCli = dbCli;
 
-            DataCollection = new CookingBookDataCollection(SQLCli);
+            DataCollection = new CookingBookDataCollection(DbCli);
 
             MainGrid.DataContext = CookinBookDictionary.Instance.GetNames(MainWindow.SelectedLanguage);
            
@@ -69,8 +70,12 @@ namespace CookingBook.Windows
 
             if (SelectedRecipe != null && SC!= null && TxtValidator.IsAmountValid(AmountOfComponentTextBox.Text.Replace(".", ",")))
             {
-                string querry = "INSERT INTO RelationsTable (ComponentId,RecipeId,Amount)VALUES('" + SC.Id + "','" + SelectedRecipe.Id + "','" + AmountOfComponentTextBox.Text.Replace(".", ",") + "')";
-                SQLCli.SetData(querry);
+                //string querry = "INSERT INTO RelationsTable (ComponentId,RecipeId,Amount)VALUES('" + SC.Id + "','" + SelectedRecipe.Id + "','" + AmountOfComponentTextBox.Text.Replace(".", ",") + "')";
+
+                DbCli.InsertData(string.Format("INSERT INTO RelationsTable (ComponentId,RecipeId,Amount)VALUES('{0}','{1}','{2}')", 
+                    SC.Id, 
+                    SelectedRecipe.Id, 
+                    AmountOfComponentTextBox.Text.Replace(".", ",")));
 
                 ComponentsInViev.ItemsSource = null;
 
@@ -90,8 +95,7 @@ namespace CookingBook.Windows
                 var SR = (Recipe)RecipeListViev.SelectedItems[0];//SelectedRecipe
                 var SC = (Component)ComponentsInViev.SelectedItem;//SelectedComponent
       
-                string querry = "DELETE FROM RelationsTable WHERE ComponentId='" + SC.Id + "'";
-                SQLCli.SetData(querry);
+                DbCli.InsertData(string.Format("DELETE FROM RelationsTable WHERE ComponentId='{0}'", SC.Id));
 
                 ComponentsInViev.ItemsSource = null;
 
@@ -106,16 +110,20 @@ namespace CookingBook.Windows
 
         private void AddNewRecipe (object sender, RoutedEventArgs e) 
         {
-            if (RecipeNameTextBox.Text != "")
+            if (RecipeNameTextBox.Text != "" && SQLInjectionParser.Parse(ChosenRecipeRichTextBox.Selection.Text + NumberOfPeopleTextBox.Text + RecipeNameTextBox.Text))
             {
                 ChosenRecipeRichTextBox.SelectAll();
 
-                string querry = "INSERT INTO RecipiesTable (Name,Recipe,Persons)VALUES('" +
+               /* string querry = "INSERT INTO RecipiesTable (Name,Recipe,Persons)VALUES('" +
                     RecipeNameTextBox.Text + "','" +
                     ChosenRecipeRichTextBox.Selection.Text + "','" +
                     NumberOfPeopleTextBox.Text + "')";
-
-                SQLCli.SetData(querry);
+                */
+                DbCli.InsertData(string.Format("INSERT INTO RecipiesTable (Name,Recipe,Persons)VALUES('{0}','{1}','{2}')", 
+                    RecipeNameTextBox.Text,
+                    ChosenRecipeRichTextBox.Selection.Text,
+                    NumberOfPeopleTextBox.Text));
+                
                 RecipeListViev.ItemsSource = null;
                 RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
 
@@ -125,8 +133,9 @@ namespace CookingBook.Windows
             else { MessageBox.Show("Niepoprawna nazwa"); }
         }
 
-        private void UpdateRecipe(object sender, RoutedEventArgs e) 
+        private void UpdateRecipe(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Jeszcze nie zrobione.");
             CollectionView RecipeViev = (CollectionView)CollectionViewSource.GetDefaultView(RecipeListViev.ItemsSource);
             RecipeViev.Filter = (item => (String.IsNullOrEmpty(RecipeFilterText.Text) ? true : ((item as Recipe).Name.IndexOf(RecipeFilterText.Text, StringComparison.OrdinalIgnoreCase) >= 0)));
 
@@ -135,8 +144,9 @@ namespace CookingBook.Windows
         {
             if (SelectedRecipe != null)
             {
-                SQLCli.SetData("DELETE FROM RecipiesTable WHERE Id='" + SelectedRecipe.Id + "'");
-                SQLCli.SetData("DELETE FROM RelationsTable WHERE RecipeId='" + SelectedRecipe.Id + "'");
+                DbCli.InsertData(string.Format("DELETE FROM RecipiesTable WHERE Id='{0}'", SelectedRecipe.Id));
+                DbCli.InsertData(string.Format("DELETE FROM RelationsTable WHERE RecipeId='{0}'", SelectedRecipe.Id));
+                
                 RecipeListViev.ItemsSource = null;
                 RecipeListViev.ItemsSource = DataCollection.GetFullRecipeList();
 

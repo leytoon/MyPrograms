@@ -10,3 +10,5 @@ E:\MySolutions\CookBookChoosenTests\bin\Debug\System.Data.SQLite.pdb
 E:\MySolutions\CookBookChoosenTests\obj\Debug\CookBookChoosenTests.csprojResolveAssemblyReference.cache
 E:\MySolutions\CookBookChoosenTests\obj\Debug\CookBookChoosenTests.dll
 E:\MySolutions\CookBookChoosenTests\obj\Debug\CookBookChoosenTests.pdb
+E:\MySolutions\CookBookChoosenTests\bin\Debug\Autofac.dll
+E:\MySolutions\CookBookChoosenTests\bin\Debug\Autofac.xml

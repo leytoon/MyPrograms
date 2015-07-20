@@ -47,11 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Access\DbHandle.cs" />
     <Compile Include="DbClients\SQLClientBase.cs" />
     <Compile Include="DbClients\SQLIteClient.cs" />
     <Compile Include="Interfaces\IDbClient.cs" />
+    <Compile Include="Interfaces\IDbHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

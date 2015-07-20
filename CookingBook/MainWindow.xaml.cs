@@ -25,11 +25,17 @@ namespace CookingBook
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
     public partial class MainWindow : Window
     {
-        
+        IDbHandle DbClient;
+
         public static string SelectedLanguage;
         public static string DbPath = @".\SqlDB.db";// @"D:\SqlDB.db"; //@".\SqlDB.db";
+
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,18 +43,8 @@ namespace CookingBook
             SelectedLanguage = "PL";
             CookingBookLanguageSelect.ChangeLanuage(SelectedLanguage, this);
 
-            var builder = new ContainerBuilder();
-
-            builder.RegisterType<SQLIteClient>().As<IDbClient>().WithParameters( new Parameter[] { 
-                                  new NamedParameter("name", ""), 
-                                  new NamedParameter("username", ""), 
-                                  new NamedParameter("DbPath",DbPath), 
-                                  new NamedParameter("dbaddress", ""),
-                                  new NamedParameter("dbpassword", "")});
-
-            var container = builder.Build();
-
-            var service = container.Resolve<SQLIteClient>();
+            DbClient = DbDependancyResolver.Resolve<IDbHandle, SQLIteClient>();
+         
             
         }
         void ChangeToENG(object sender, RoutedEventArgs e)
@@ -63,20 +59,20 @@ namespace CookingBook
         }
         void ShowAddComponentWindow(object sender, RoutedEventArgs e)
         {
-            ComponentsWindow Window = new ComponentsWindow();
+            ComponentsWindow Window = new ComponentsWindow(DbClient);
             Window.Title = CookinBookDictionary.Instance.GetNames(SelectedLanguage).AddComponent;
             Window.Show();
            
         }
         void ShowAddRecepieWindow(object sender, RoutedEventArgs e)
         {
-            RecipesWindow Window = new RecipesWindow();
+            RecipesWindow Window = new RecipesWindow(DbClient);
             Window.Title = CookinBookDictionary.Instance.GetNames(SelectedLanguage).AddRecipie;
             Window.Show();
         }
         void ShowSearchRecipeWindow(object sender, RoutedEventArgs e)
         {
-            SearchRecipeWindow Window = new SearchRecipeWindow();
+            SearchRecipeWindow Window = new SearchRecipeWindow(DbClient);
             Window.Title = CookinBookDictionary.Instance.GetNames(SelectedLanguage).SearchRecipie;
             Window.Show();
         }

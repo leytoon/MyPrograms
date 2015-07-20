@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using CookingBook.DataTypes;
 using CookingBook.Utilities;
 using DatabaseLib.DBClients;
+using DatabaseLib.Interfaces;
 
 namespace CookingBook.Windows
 {
@@ -23,20 +24,20 @@ namespace CookingBook.Windows
     public partial class SearchRecipeWindow : Window
     {
 
-        SQLIteClient SQLCli = null;
+        IDbHandle DbCli = null;
 
         Recipe SelectedRecipe;
 
         CookingBookDataCollection DataCollection;
-        public SearchRecipeWindow()
+        public SearchRecipeWindow(IDbHandle dbCli)
         {
             InitializeComponent();
 
-            SQLCli = new SQLIteClient("", "", MainWindow.DbPath, "");
+            DbCli = dbCli;
 
             MainGrid.DataContext = CookinBookDictionary.Instance.GetNames(MainWindow.SelectedLanguage);
 
-            DataCollection = new CookingBookDataCollection(SQLCli);
+            DataCollection = new CookingBookDataCollection(DbCli);
 
             RecipeListView.ItemsSource = DataCollection.GetFullRecipeList();
             AllComponentsView.ItemsSource = DataCollection.GetFullComponentList();

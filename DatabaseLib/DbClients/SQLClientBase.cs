@@ -8,19 +8,19 @@ using DatabaseLib.Interfaces;
 
 namespace DatabaseLib.DBClients
 {
-    public abstract class SQLClientBase : IDbClient
+    public abstract class DbClientBase : IDbClient
     {
         protected string DbName;
         protected string DbAddress; //For other kind of DataBases
         protected string DbUserName;
         protected string DbPassword;
         
-        public SQLClientBase(string _dbName, string _dbUserName, string _dbPassword, string _dbAddress)
+        public DbClientBase(string dbName, string dbUserName, string dbPassword, string dbAddress)
         {
-            DbName = _dbName;
-            DbAddress = _dbAddress;
-            DbUserName = _dbUserName;
-            DbPassword = _dbPassword;
+            DbName = dbName;
+            DbAddress = dbAddress;
+            DbUserName = dbUserName;
+            DbPassword = dbPassword;
         }
        
         public abstract DataSet GetData(string Querry);

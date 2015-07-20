@@ -3,6 +3,6 @@ E:\MySolutions\DatabaseLib\bin\Debug\DatabaseLib.pdb
 E:\MySolutions\DatabaseLib\bin\Debug\SQLite.NET.dll
 E:\MySolutions\DatabaseLib\bin\Debug\System.Data.SQLite.dll
 E:\MySolutions\DatabaseLib\bin\Debug\System.Data.SQLite.pdb
-E:\MySolutions\DatabaseLib\obj\Debug\DatabaseLib.csprojResolveAssemblyReference.cache
 E:\MySolutions\DatabaseLib\obj\Debug\DatabaseLib.dll
 E:\MySolutions\DatabaseLib\obj\Debug\DatabaseLib.pdb
+E:\MySolutions\DatabaseLib\obj\Debug\DatabaseLib.csprojResolveAssemblyReference.cache

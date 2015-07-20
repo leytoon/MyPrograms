@@ -9,3 +9,4 @@ E:\MySolutions\WPFThemes\obj\Debug\WPFThemes.Properties.Resources.resources
 E:\MySolutions\WPFThemes\obj\Debug\WPFThemes.csproj.GenerateResource.Cache
 E:\MySolutions\WPFThemes\obj\Debug\WPFThemes.dll
 E:\MySolutions\WPFThemes\obj\Debug\WPFThemes.pdb
+E:\MySolutions\WPFThemes\obj\Debug\WPFThemes.csprojResolveAssemblyReference.cache

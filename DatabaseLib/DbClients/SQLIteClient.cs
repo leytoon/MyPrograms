@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace DatabaseLib.DBClients
 {
-    public class SQLIteClient : SQLClientBase
+    public class SQLIteClient : DbClientBase
     {
 
         private string ConnectionString = "Data Source={0}{1}{2}{3};";
         private SQLiteConnection Connection;
-        
-        public SQLIteClient(string name, string userName, string dbaddress, string dbpassword)
-            : base(name, userName, dbaddress, dbpassword)
+
+        public SQLIteClient(string dbName, string dbUserName, string dbPassword, string dbAddress)
+            : base(dbName, dbUserName, dbPassword, dbAddress)
         {
-            this.ConnectionString = String.Format(ConnectionString, dbaddress, "", "", "", "");
+            this.ConnectionString = String.Format(ConnectionString, dbAddress, "", "", "", "");
         }
 
         public override DataSet GetData(string querry)

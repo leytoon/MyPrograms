@@ -5,21 +5,22 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using DatabaseLib.DBClients;
+using DatabaseLib.Interfaces;
 
 namespace CookingBook.DataTypes
 {
     public class CookingBookDataCollection  //Get and stores Collection of the data from database
     {
-        SQLIteClient SQLCli;
+        IDbHandle DbCli;
 
         public List<Recipe> ListOfRecipes = new List<Recipe>();
         public List<Component> ListOfComponents = new List<Component>(); 
         public List<Component> ChoosenComponents = new List<Component>();
         public List<Recipe> FilteredListOfRecipes = new List<Recipe>();
         public List<Relation> ListOfRelations;
-        public CookingBookDataCollection(SQLIteClient dbCli)
+        public CookingBookDataCollection(IDbHandle dbCli)
         {
-            SQLCli = dbCli;
+            DbCli = dbCli;
             ListOfRelations = GetRelationList();
             
         }
@@ -29,7 +30,7 @@ namespace CookingBook.DataTypes
 
             DataSet relationsTable = new DataSet();
 
-            relationsTable = SQLCli.GetData("SELECT * FROM RelationsTable");
+            relationsTable = DbCli.GetData("SELECT * FROM RelationsTable");
 
             for (int i = 0; i < relationsTable.Tables[0].Rows.Count; i++)
                 ListOfRelations.Add(new Relation(relationsTable.Tables[0].Rows[i]));
@@ -40,7 +41,7 @@ namespace CookingBook.DataTypes
         {
             ListOfRecipes = new List<Recipe>();
 
-            var data = SQLCli.GetData("select * from RecipiesTable");
+            var data = DbCli.GetData("select * from RecipiesTable");
 
             for (int i = 0; i < data.Tables[0].Rows.Count; i++)
                 ListOfRecipes.Add(new Recipe(data.Tables[0].Rows[i]));
@@ -55,10 +56,10 @@ namespace CookingBook.DataTypes
            " NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='" + selectedRecipe.Id +
            "'AND RelationsTable.ComponentId=ResourcesTable.Idres ";
 
-            var data = SQLCli.GetData(SQLquerry);
+            var data = DbCli.GetData(SQLquerry);
 
             SQLquerry = "SELECT RelationsTable.Amount FROM RelationsTable WHERE RelationsTable.RecipeId='" + selectedRecipe.Id + "'";// + "'AND RelationsTable.ComponentId=ResourcesTable.Idres ";
-            var amountT = SQLCli.GetData(SQLquerry);
+            var amountT = DbCli.GetData(SQLquerry);
             List<Component> ListOfAllComponents = new List<Component>();
 
 
@@ -75,7 +76,7 @@ namespace CookingBook.DataTypes
         {
             ListOfComponents.Clear();
 
-            var data = SQLCli.GetData("select * from ResourcesTable");
+            var data = DbCli.GetData("select * from ResourcesTable");
 
             for (int i = 0; i < data.Tables[0].Rows.Count; i++)
                 ListOfComponents.Add(new Component(data.Tables[0].Rows[i]));
