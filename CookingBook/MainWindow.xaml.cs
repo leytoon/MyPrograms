@@ -34,8 +34,6 @@ namespace CookingBook
         public static string SelectedLanguage;
         public static string DbPath = @".\SqlDB.db";// @"D:\SqlDB.db"; //@".\SqlDB.db";
 
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -76,7 +74,12 @@ namespace CookingBook
             Window.Title = CookinBookDictionary.Instance.GetNames(SelectedLanguage).SearchRecipie;
             Window.Show();
         }
-       
-        
+
+        void ShowMigrationB2B(object sender, RoutedEventArgs e)
+        {
+            MigrationBase2Base Window = new MigrationBase2Base(DbClient);
+            Window.Title = CookinBookDictionary.Instance.GetNames(SelectedLanguage).Migration;
+            Window.Show();
+        }
     }
 }

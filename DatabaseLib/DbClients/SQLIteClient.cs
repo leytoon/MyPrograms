@@ -40,7 +40,7 @@ namespace DatabaseLib.DBClients
             var sqliteCommand = new SQLiteCommand(querry, this.Connection);
 
             this.Connection.Open();
-
+            
             return sqliteCommand.ExecuteNonQuery();
         }
     }

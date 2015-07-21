@@ -1,14 +1,14 @@
 E:\MySolutions\CookBookChoosenTests\bin\Debug\CookBookChoosenTests.dll
 E:\MySolutions\CookBookChoosenTests\bin\Debug\CookBookChoosenTests.pdb
+E:\MySolutions\CookBookChoosenTests\bin\Debug\Autofac.dll
 E:\MySolutions\CookBookChoosenTests\bin\Debug\CookingBook.exe
 E:\MySolutions\CookBookChoosenTests\bin\Debug\DatabaseLib.dll
 E:\MySolutions\CookBookChoosenTests\bin\Debug\SQLite.NET.dll
 E:\MySolutions\CookBookChoosenTests\bin\Debug\System.Data.SQLite.dll
 E:\MySolutions\CookBookChoosenTests\bin\Debug\CookingBook.pdb
 E:\MySolutions\CookBookChoosenTests\bin\Debug\DatabaseLib.pdb
+E:\MySolutions\CookBookChoosenTests\bin\Debug\Autofac.xml
 E:\MySolutions\CookBookChoosenTests\bin\Debug\System.Data.SQLite.pdb
 E:\MySolutions\CookBookChoosenTests\obj\Debug\CookBookChoosenTests.csprojResolveAssemblyReference.cache
 E:\MySolutions\CookBookChoosenTests\obj\Debug\CookBookChoosenTests.dll
 E:\MySolutions\CookBookChoosenTests\obj\Debug\CookBookChoosenTests.pdb
-E:\MySolutions\CookBookChoosenTests\bin\Debug\Autofac.dll
-E:\MySolutions\CookBookChoosenTests\bin\Debug\Autofac.xml

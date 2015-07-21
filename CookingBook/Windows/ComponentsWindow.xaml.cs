@@ -99,7 +99,7 @@ namespace CookingBook.Windows
 
                 //pomyśleć jakby to można skrócić
                 CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
-                ComponentViev.Filter = ComponentFilter;//To allow search after Updation
+                ComponentViev.Filter = ComponentFilter;//To allow search
             }
             else
             {
@@ -117,7 +117,7 @@ namespace CookingBook.Windows
                 ComponentsListViev.ItemsSource = Components.GetFullComponentList();
 
                 CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
-                ComponentViev.Filter = ComponentFilter;//To allow search after Updation
+                ComponentViev.Filter = ComponentFilter;
             }
         }
 
@@ -138,7 +138,7 @@ namespace CookingBook.Windows
             ComponentsListViev.ItemsSource = Components.GetFullComponentList();
 
             CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
-            ComponentViev.Filter = ComponentFilter;//To allow search
+            ComponentViev.Filter = ComponentFilter;
 
         }
 

@@ -24,7 +24,13 @@ namespace CookingBook.DataTypes
             ListOfRelations = GetRelationList();
             
         }
-        private List<Relation> GetRelationList()
+        public void GetAll() 
+        {
+            GetRelationList();
+            GetFullRecipeList();
+            GetFullComponentList();
+        }
+        public List<Relation> GetRelationList()
         {
             ListOfRelations = new List<Relation>();
 
@@ -60,16 +66,16 @@ namespace CookingBook.DataTypes
 
             SQLquerry = "SELECT RelationsTable.Amount FROM RelationsTable WHERE RelationsTable.RecipeId='" + selectedRecipe.Id + "'";// + "'AND RelationsTable.ComponentId=ResourcesTable.Idres ";
             var amountT = DbCli.GetData(SQLquerry);
-            List<Component> ListOfAllComponents = new List<Component>();
+            List<Component> ListOfIncludedComponents = new List<Component>();
 
 
             for (int i = 0; i < data.Tables[0].Rows.Count; i++)
             {
                 object[] amount = amountT.Tables[0].Rows[i].ItemArray;
-                ListOfAllComponents.Add(new Component(data.Tables[0].Rows[i], amount[0].ToString()));
+                ListOfIncludedComponents.Add(new Component(data.Tables[0].Rows[i], amount[0].ToString()));
             }
 
-            return ListOfAllComponents;
+            return ListOfIncludedComponents;
         }
 
         public List<Component> GetFullComponentList()// Making list of all components

@@ -5,55 +5,44 @@
 
     <Grid Name="ResourceGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="49*"/>
-            <RowDefinition Height="471*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" MinWidth="98"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="1" Grid.RowSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="188"/>
-                <ColumnDefinition Width="Auto" MinWidth="64" />
-                <ColumnDefinition Width="Auto" MinWidth="109"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" MinHeight="52"/>
-                <RowDefinition Height="Auto" MinHeight="44"/>
-                <RowDefinition Height="Auto" MinHeight="40"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+        <Button Content="{Binding Delete}" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="96" Height="32" Grid.Row="1" Grid.Column="3" Click="Delete"  />
+        <Button Content="{Binding Update}" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="96" Height="32" Grid.Row="2" Grid.Column="3" Click="Update"   />
+        <Button Content="{Binding Add}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="0" Width="96" Height="32"  Click="Add" />
 
-            <GridSplitter Grid.Column ="3" Width ="10"  HorizontalAlignment="Right" VerticalAlignment="Top" Height="0"/>
-
-            <Button Content="{Binding Delete}" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="96" Height="32" Grid.Row="2" Grid.Column="2" Click="Delete" />
-            <Button Content="{Binding Update}" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="96" Height="32" Grid.Row="1" Grid.Column="2" Click="Update"  />
-            <Button Content="{Binding Add}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="2" Width="96" Height="32"  Click="Add" />
-
-            <!--<TextBox Name="ResourceTextBox" HorizontalAlignment="Right" Height="23" Margin="0,21,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="179"/>
+        <!--<TextBox Name="ResourceTextBox" HorizontalAlignment="Right" Height="23" Margin="0,21,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="179"/>
             <TextBox Name="ValueTextBox" HorizontalAlignment="Left" Height="23" Margin="10,21,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="50" Grid.Column="1"/>-->
-            <TextBox Name="UpResourceTextBox" HorizontalAlignment="Right" Height="23" Margin="0,21,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="179" Grid.Row="0"/>
-            <TextBox Name="UpValueTextBox" HorizontalAlignment="Left" Height="23" Margin="10,21,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="50" Grid.Row="0" Grid.Column="1"/>
+        <TextBox Name="UpResourceTextBox" HorizontalAlignment="Stretch" Height="23" Margin="5,21,1,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="112" Grid.Row="0" Grid.Column="1"/>
+        <TextBox Name="UpValueTextBox" HorizontalAlignment="Stretch" Height="23" Margin="1,21,0,1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="112" Grid.Row="0" Grid.Column="2" />
 
 
-            <TextBlock Name="UpValueTextBlock" HorizontalAlignment="Left" Margin="10,16,0,0" TextWrapping="Wrap" Text="----------" VerticalAlignment="Top" Height="16" Width="50" Grid.Row="1" Grid.Column="1"/>
-            <TextBlock Name="UpResourceTextBlock" HorizontalAlignment="Left" Margin="10,16,0,0" TextWrapping="Wrap" Text="--------" VerticalAlignment="Top" Height="16" Width="50" Grid.Row="1"/>
-            
-            <!--<TextBlock Text="{Binding Price}" HorizontalAlignment="Stretch" Margin="10,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="auto" Grid.Row="1" Grid.Column="1"/>
+        <TextBlock Name="UpValueTextBlock" HorizontalAlignment="Left" Margin="24,16,0,0" TextWrapping="Wrap" Text="----------" VerticalAlignment="Top" Height="16" Width="50" Grid.Row="1" Grid.Column="2"/>
+        <TextBlock Name="UpResourceTextBlock" HorizontalAlignment="Left" Margin="10,16,0,0" TextWrapping="Wrap" Text="--------" VerticalAlignment="Top" Height="16" Width="50" Grid.Row="1" Grid.Column="1"/>
+
+        <!--<TextBlock Text="{Binding Price}" HorizontalAlignment="Stretch" Margin="10,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="auto" Grid.Row="1" Grid.Column="1"/>
             <TextBlock Text="{Binding Component}" HorizontalAlignment="Stretch" Margin="10,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="auto" Grid.Row="1"/>-->
-            <TextBlock Text="{Binding Price}" HorizontalAlignment="Stretch" Margin="10,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="auto" Grid.Column="1"/>
-            <TextBlock Text="{Binding Component}" HorizontalAlignment="Stretch" Margin="10,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="auto"/>
+        <TextBlock Text="{Binding Price}" HorizontalAlignment="Stretch" Margin="0,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="auto" Grid.Column="2"/>
+        <TextBlock Text="{Binding Component}" HorizontalAlignment="Stretch" Margin="0,0,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Width="auto" Grid.Column="1"/>
 
-        </Grid>
+
 
         <TextBlock Text="{Binding Search}" Margin="24,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" Height="16"/>
-        <TextBox Name="ComponentsFilterTextt" TextChanged="ComponentTextChanged" Height="23" Margin="0,21,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+        <TextBox Name="ComponentsFilterTextt" TextChanged="ComponentTextChanged" Height="23" Margin="2,21,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
 
 
-        <ScrollViewer  Name="ComponentSV" CanContentScroll="True" Grid.Column="0" Grid.Row="1">
+        <ScrollViewer  Name="ComponentSV" CanContentScroll="True" Grid.Column="0" Grid.Row="1" Grid.RowSpan="3">
             <ListView Name="ComponentsListViev" MouseLeftButtonUp="getSelectedItem" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListView.View>
                     <GridView AllowsColumnReorder="True">

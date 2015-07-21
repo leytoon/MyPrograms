@@ -20,7 +20,7 @@
             <MenuItem  Header="{Binding SearchRecipie}" Click="ShowSearchRecipeWindow"></MenuItem>
 
             <MenuItem  Header="{Binding Migration}">
-                <MenuItem Header="{Binding FromBaseToBase}"/>
+                <MenuItem Header="{Binding FromBaseToBase}" Click="ShowMigrationB2B"/>
                 <MenuItem Header="{Binding FromBaseToServer}"/>
                 <MenuItem Header="{Binding FromServerToBase}"/>
             </MenuItem>

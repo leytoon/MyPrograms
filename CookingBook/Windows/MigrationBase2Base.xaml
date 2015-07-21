@@ -1,0 +1,58 @@
+﻿<Window x:Class="CookingBook.Windows.MigrationBase2Base"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MigrationBase2Base" Height="300" Width="300">
+
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="36*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="24*"/>
+            <RowDefinition Height="159*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+
+        <Button Content="OPEN Database" Click="OpenForeignDB" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="76" Height="20"/>
+        <Button Content="Migrate" Click="MigrateRecipe" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Width="76" Height="20"/>
+
+        <TextBox Name="ForeignRecipeFilterText" Grid.Row="3"  TextChanged="ForeignRecipeFilterText_Changed" VerticalAlignment="Center" HorizontalAlignment="Stretch"  TextWrapping="Wrap" Text="" Grid.Column="1" Margin="0,3"/>
+        <TextBox Name="MainRecipeFilterText" Grid.Row="3"  TextChanged="MainRecipeFilterText_Changed" VerticalAlignment="Center" HorizontalAlignment="Stretch"  TextWrapping="Wrap" Text="" Margin="0,3"/>
+
+        <TextBlock HorizontalAlignment="Left" Height="23"  Grid.Row="2" TextWrapping="Wrap" Text="MainDb" VerticalAlignment="Top" Width="120" Grid.RowSpan="2"/>
+        <TextBlock HorizontalAlignment="Left" Height="23"  Grid.Row="2" Grid.Column="1" TextWrapping="Wrap" Text="ForeignDb" VerticalAlignment="Top" Width="120" Grid.RowSpan="2"/>
+
+        <TextBlock HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Opened:" VerticalAlignment="Top" Width="120" Grid.RowSpan="2" Margin="0,7,0,0"/>
+        <TextBlock HorizontalAlignment="Left" Height="23"  Grid.Row="2" TextWrapping="Wrap" Text="MainDb" VerticalAlignment="Top" Width="120"/>
+        <TextBlock Name="OpenedName" HorizontalAlignment="Left" Height="23"  Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="0,5,0,0"/>
+
+        <ScrollViewer  CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+        <ListView Name="ForeignDbListViev" MaxHeight="300" MaxWidth="200" Grid.Column="1" Grid.Row="4">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True">
+                    <GridViewColumn  Width="auto" Header="{Binding Recipe}"
+        				DisplayMemberBinding="{Binding Name}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ScrollViewer  CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+        <ListView Name="MainDbListViev" MaxHeight="300" MaxWidth="200" Grid.Row="4">
+            <ListView.View>
+                <GridView AllowsColumnReorder="True">
+                    <GridViewColumn  Width="auto" Header="{Binding Component}"
+        				DisplayMemberBinding="{Binding Name}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+
+    </Grid>
+</Window>

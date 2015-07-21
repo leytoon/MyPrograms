@@ -13,7 +13,6 @@ using System.Windows.Shapes;
 using DatabaseLib.DBClients;
 using CookingBook.DataTypes;
 using CookingBook.Utilities;
-using System.Globalization;
 using DatabaseLib.Interfaces;
 
 namespace CookingBook.Windows
@@ -70,8 +69,6 @@ namespace CookingBook.Windows
 
             if (SelectedRecipe != null && SC!= null && TxtValidator.IsAmountValid(AmountOfComponentTextBox.Text.Replace(".", ",")))
             {
-                //string querry = "INSERT INTO RelationsTable (ComponentId,RecipeId,Amount)VALUES('" + SC.Id + "','" + SelectedRecipe.Id + "','" + AmountOfComponentTextBox.Text.Replace(".", ",") + "')";
-
                 DbCli.InsertData(string.Format("INSERT INTO RelationsTable (ComponentId,RecipeId,Amount)VALUES('{0}','{1}','{2}')", 
                     SC.Id, 
                     SelectedRecipe.Id, 
@@ -114,11 +111,6 @@ namespace CookingBook.Windows
             {
                 ChosenRecipeRichTextBox.SelectAll();
 
-               /* string querry = "INSERT INTO RecipiesTable (Name,Recipe,Persons)VALUES('" +
-                    RecipeNameTextBox.Text + "','" +
-                    ChosenRecipeRichTextBox.Selection.Text + "','" +
-                    NumberOfPeopleTextBox.Text + "')";
-                */
                 DbCli.InsertData(string.Format("INSERT INTO RecipiesTable (Name,Recipe,Persons)VALUES('{0}','{1}','{2}')", 
                     RecipeNameTextBox.Text,
                     ChosenRecipeRichTextBox.Selection.Text,
