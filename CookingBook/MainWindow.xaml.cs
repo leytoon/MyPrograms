@@ -32,7 +32,7 @@ namespace CookingBook
         IDbHandle DbClient;
 
         public static string SelectedLanguage;
-        public static string DbPath = @".\SqlDB.db";// @"D:\SqlDB.db"; //@".\SqlDB.db";
+        public static string DbPath = @".\SqlDB.db";
 
         public MainWindow()
         {
@@ -43,8 +43,8 @@ namespace CookingBook
 
             DbClient = DbDependancyResolver.Resolve<IDbHandle, SQLIteClient>();
          
-            
         }
+
         void ChangeToENG(object sender, RoutedEventArgs e)
         {
             SelectedLanguage = "ENG";

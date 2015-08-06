@@ -81,14 +81,14 @@ namespace CookingBook.Windows
                 UpValueTextBox.Text = UpdateResObj.Value;
             }
             else if (TxtValidator.IsPriceValid(UpValueTextBox.Text.ToString().Replace(".", ",")) 
-                && SQLInjectionParser.Parse(UpValueTextBox.Text + UpResourceTextBox.Text))
+                    && SQLInjectionParser.Parse(UpValueTextBox.Text + UpResourceTextBox.Text))
             {
                 if (string.IsNullOrEmpty(UpResourceTextBox.Text))
                     UpResourceTextBox.Text = UpdateResObj.Name;
 
                 DbCli.InsertData(string.Format("UPDATE ResourcesTable SET Resource= '{0}',Value='{1}' WHERE Idres='{2}'", 
-                    UpResourceTextBox.Text, 
-                    UpValueTextBox.Text.Replace(".", ","), 
+                    UpResourceTextBox.Text,                //new name
+                    UpValueTextBox.Text.Replace(".", ","), //new price
                     UpdateResObj.Id));
 
                 UpResourceTextBox.Text = "";
@@ -97,7 +97,6 @@ namespace CookingBook.Windows
                 ComponentsListViev.ItemsSource = null;
                 ComponentsListViev.ItemsSource = Components.GetFullComponentList();
 
-                //pomyśleć jakby to można skrócić
                 CollectionView ComponentViev = (CollectionView)CollectionViewSource.GetDefaultView(ComponentsListViev.ItemsSource);
                 ComponentViev.Filter = ComponentFilter;//To allow search
             }

@@ -11,7 +11,7 @@ namespace DatabaseLib.DBClients
     public abstract class DbClientBase : IDbClient
     {
         protected string DbName;
-        protected string DbAddress; //For other kind of DataBases
+        protected string DbAddress;
         protected string DbUserName;
         protected string DbPassword;
         
@@ -23,8 +23,8 @@ namespace DatabaseLib.DBClients
             DbPassword = dbPassword;
         }
        
-        public abstract DataSet GetData(string Querry);
-        public abstract int SetData(string Querry);
+        public abstract DataSet GetData(string querry);
+        public abstract int SetData(string querry);
 
 
     }

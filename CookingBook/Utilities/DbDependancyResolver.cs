@@ -18,6 +18,7 @@ namespace CookingBook.Utilities
         {
             var builder = new ContainerBuilder();
 
+            //
             builder.RegisterType<b>().As<IDbClient>().
                 WithParameters(new Parameter[] { new NamedParameter("dbName", ""), new NamedParameter("dbUserName", ""), new NamedParameter("dbPassword", ""), new NamedParameter("dbAddress", MainWindow.DbPath) });
             builder.RegisterType<DbHandle>().As<IDbHandle>();

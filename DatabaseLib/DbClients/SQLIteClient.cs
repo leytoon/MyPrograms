@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace DatabaseLib.DBClients
 {
     public class SQLIteClient : DbClientBase
@@ -43,5 +45,7 @@ namespace DatabaseLib.DBClients
             
             return sqliteCommand.ExecuteNonQuery();
         }
+
+       
     }
 }

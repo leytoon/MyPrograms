@@ -47,7 +47,7 @@ namespace CookingBook.DataTypes
         {
             ListOfRecipes = new List<Recipe>();
 
-            var data = DbCli.GetData("select * from RecipiesTable");
+            var data = DbCli.GetData("SELECT * FROM RecipiesTable");
 
             for (int i = 0; i < data.Tables[0].Rows.Count; i++)
                 ListOfRecipes.Add(new Recipe(data.Tables[0].Rows[i]));
@@ -57,17 +57,15 @@ namespace CookingBook.DataTypes
 
         public List<Component> GetComponentList(Recipe selectedRecipe)//Making list of Components included in given Recipe
         {
-            //String SQLquerry = "SELECT ResourcesTable.Idres, ResourcesTable.Resource, ResourcesTable.Value FROM ResourcesTable NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='" + selectedRecipe.Id + "'AND RelationsTable.ComponentId=ResourcesTable.Idres";
-            String SQLquerry = "SELECT ResourcesTable.Idres, ResourcesTable.Resource, ResourcesTable.Value FROM ResourcesTable" +
-           " NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='" + selectedRecipe.Id +
-           "'AND RelationsTable.ComponentId=ResourcesTable.Idres ";
+            var data = DbCli.GetData(string.Format("SELECT ResourcesTable.Idres, ResourcesTable.Resource, ResourcesTable.Value " +
+                        "FROM ResourcesTable" +
+                        " NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='{0}'"+
+                        "AND RelationsTable.ComponentId=ResourcesTable.Idres", selectedRecipe.Id));
+            // Select those components what are included in recipe
 
-            var data = DbCli.GetData(SQLquerry);
-
-            SQLquerry = "SELECT RelationsTable.Amount FROM RelationsTable WHERE RelationsTable.RecipeId='" + selectedRecipe.Id + "'";// + "'AND RelationsTable.ComponentId=ResourcesTable.Idres ";
-            var amountT = DbCli.GetData(SQLquerry);
+            var amountT = DbCli.GetData("SELECT RelationsTable.Amount FROM RelationsTable WHERE RelationsTable.RecipeId='" + selectedRecipe.Id + "'");
+            
             List<Component> ListOfIncludedComponents = new List<Component>();
-
 
             for (int i = 0; i < data.Tables[0].Rows.Count; i++)
             {
@@ -138,7 +136,7 @@ namespace CookingBook.DataTypes
                 {
                     if (conection[0, j] == ListOfRecipes[k].Id && conection[1, j] >= cConstrain 
                         && ListOfRecipes[k].Persons >= pConstrain
-                        && ListOfRecipes[k].Id >= 0)//<-here goes time constrain
+                        && ListOfRecipes[k].Id >= 0)//<-here goes time constrain|ListOfRecipes[k].PreparingTime <= tConstrain|
                     {
                         FilteredListOfRecipes.Add(ListOfRecipes[k]);
                     }
@@ -152,3 +150,8 @@ namespace CookingBook.DataTypes
 
     }
 }
+
+// //String SQLquerry = "SELECT ResourcesTable.Idres, ResourcesTable.Resource, ResourcesTable.Value FROM ResourcesTable NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='" + selectedRecipe.Id + "'AND RelationsTable.ComponentId=ResourcesTable.Idres";
+// String SQLquerry = "SELECT ResourcesTable.Idres, ResourcesTable.Resource, ResourcesTable.Value FROM ResourcesTable" +
+//" NATURAL JOIN RelationsTable WHERE relationsTable.RecipeId='" + selectedRecipe.Id +
+//"'AND RelationsTable.ComponentId=ResourcesTable.Idres ";
